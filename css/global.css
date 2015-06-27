@@ -1,0 +1,146 @@
+/* line 6, ../sass/global.scss */
+.container {
+  position: relative;
+  width: 1000px;
+  margin: auto;
+  padding-bottom: 60px;
+}
+/* line 11, ../sass/global.scss */
+.container .content {
+  *zoom: 1;
+}
+/* line 38, ../../../../../usr/local/ruby-2.1.4/lib/ruby/gems/2.1.0/gems/compass-core-1.0.1/stylesheets/compass/utilities/general/_clearfix.scss */
+.container .content:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* line 15, ../sass/global.scss */
+#view-wrap, #add-widgets-panel {
+  width: 40%;
+}
+
+/* line 20, ../sass/global.scss */
+#editor-wrap {
+  position: relative;
+  float: right;
+  padding: 10px;
+  width: 60%;
+}
+/* line 25, ../sass/global.scss */
+#editor-wrap #add-widgets-panel {
+  float: none;
+  width: 100%;
+}
+/* line 29, ../sass/global.scss */
+#editor-wrap .am-tabs-bd {
+  border-bottom: none;
+}
+/* line 32, ../sass/global.scss */
+#editor-wrap .inputArea {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+/* line 37, ../sass/global.scss */
+#editor-wrap .add-item .am-btn {
+  margin-right: 10px;
+}
+
+/* line 44, ../sass/global.scss */
+#view-wrap {
+  float: left;
+  padding: 10px;
+  background-color: #f8f8f8;
+}
+/* line 48, ../sass/global.scss */
+#view-wrap .control-group {
+  position: relative;
+  padding-bottom: 30px;
+}
+/* line 51, ../sass/global.scss */
+#view-wrap .control-group.active, #view-wrap .control-group:hover {
+  outline: 2px solid #fc7d7d;
+}
+/* line 55, ../sass/global.scss */
+#view-wrap .actions-wrap {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  *zoom: 1;
+}
+/* line 38, ../../../../../usr/local/ruby-2.1.4/lib/ruby/gems/2.1.0/gems/compass-core-1.0.1/stylesheets/compass/utilities/general/_clearfix.scss */
+#view-wrap .actions-wrap:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+/* line 60, ../sass/global.scss */
+#view-wrap .actions-wrap .action {
+  float: left;
+  padding: 2px 4px;
+  margin-right: 2px;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+}
+
+/* line 72, ../sass/global.scss */
+#add-widgets-panel {
+  background-color: #f8f8f8;
+  padding: 10px;
+}
+/* line 75, ../sass/global.scss */
+#add-widgets-panel h4 {
+  text-align: center;
+  line-height: 30px;
+}
+
+/* line 83, ../sass/global.scss */
+.bottom-action {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  width: 100%;
+  line-height: 40px;
+  text-align: center;
+  background-color: #fefde2;
+}
+
+/* line 97, ../sass/global.scss */
+.components-box {
+  background-color: #f9f9f9;
+}
+/* line 99, ../sass/global.scss */
+.components-box > h1, .components-box > h2, .components-box > h3 {
+  border-top: 2px solid #0066bb;
+  background-color: #d9d9d9;
+}
+/* line 103, ../sass/global.scss */
+.components-box > h1 {
+  font-size: 24px;
+}
+/* line 104, ../sass/global.scss */
+.components-box > h2 {
+  font-size: 20px;
+}
+/* line 105, ../sass/global.scss */
+.components-box > h3 {
+  font-size: 18px;
+}
+
+/* line 107, ../sass/global.scss */
+.am-menu {
+  padding-top: 47px;
+  border-top: 1px solid #ddd;
+}
+/* line 110, ../sass/global.scss */
+.am-menu .am-menu-toggle {
+  top: 0;
+}
+/* line 113, ../sass/global.scss */
+.am-menu .am-menu-toggle-icon, .am-menu .am-menu-toggle-title {
+  color: #333;
+}

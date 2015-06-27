@@ -49,6 +49,5 @@ vendor/amazeui/.idea
 
 # bootstrap 框架
 vendor/bootstrap/docs
-vendor/bootstrap/widget
 vendor/bootstrap/node_modules
 vendor/bootstrap/.idea

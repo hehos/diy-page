@@ -1,0 +1,48 @@
+@import "compass";
+@import "../variables";
+
+// 组件变量
+$nav-item-padding: 12px !default;
+
+
+
+.#{$ns}nav {
+  display: block;
+  li {
+    position: relative;
+    padding: $nav-item-padding;
+    background-color: #fff;
+    & > a {
+      display: block;
+    }
+  }
+  .jz-item-icon {
+    float: left;
+  }
+  .jz-item-txt {
+    overflow: hidden;
+  }
+  .jz-right-icon {
+    float: right;
+  }
+}
+
+.#{$ns}nav-icon2, .#{$ns}nav-icon3 {
+}
+.#{$ns}nav-icon1 {
+  @include pie-clearfix;
+  .jz-item-icon {
+    float: none;
+    margin-bottom: 10px;
+  }
+  .jz-right-icon { display: none }
+  li {
+    float: left;
+    width: 25%;
+    text-align: center;
+  }
+  .jz-item-txt {
+    font-size: 14px;
+    line-height: 1;
+  }
+}

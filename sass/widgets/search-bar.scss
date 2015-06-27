@@ -1,0 +1,49 @@
+@import "compass";
+@import "../variables";
+
+// 组件变量
+
+// common part
+.jz-search-bar {
+  border: 1px solid #ddd;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 5px;
+  .jz-search-icon, .jz-search-dropdown, .jz-search-input {
+    height: 100%;
+  }
+  .jz-search-icon, .jz-search-dropdown {
+    float: left;
+  }
+  .jz-search-dropdown, .am-selected  {
+    display: none;
+  }
+  .jz-search-icon, .jz-search-btn {
+    line-height: 38px;
+    text-align: center;
+    vertical-align: top;
+    color: #999;
+    i {
+      vertical-align: top;
+    }
+  }
+  .jz-search-icon {
+    width: 2em;
+    font-size: 24px;
+    background-color: transparent;
+  }
+  .jz-search-btn {
+    float: right;
+  }
+
+  .jz-search-input {
+    overflow: hidden;
+    input {
+      width: 100%;
+      height: 100%;
+      padding: 3px 10px;
+      vertical-align: top;
+    }
+  }
+
+}

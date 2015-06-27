@@ -1,0 +1,51 @@
+/* line 7, ../../sass/widgets/search-bar.scss */
+.jz-search-bar {
+  border: 1px solid #ddd;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 5px;
+}
+/* line 12, ../../sass/widgets/search-bar.scss */
+.jz-search-bar .jz-search-icon, .jz-search-bar .jz-search-dropdown, .jz-search-bar .jz-search-input {
+  height: 100%;
+}
+/* line 15, ../../sass/widgets/search-bar.scss */
+.jz-search-bar .jz-search-icon, .jz-search-bar .jz-search-dropdown {
+  float: left;
+}
+/* line 18, ../../sass/widgets/search-bar.scss */
+.jz-search-bar .jz-search-dropdown, .jz-search-bar .am-selected {
+  display: none;
+}
+/* line 21, ../../sass/widgets/search-bar.scss */
+.jz-search-bar .jz-search-icon, .jz-search-bar .jz-search-btn {
+  line-height: 38px;
+  text-align: center;
+  vertical-align: top;
+  color: #999;
+}
+/* line 26, ../../sass/widgets/search-bar.scss */
+.jz-search-bar .jz-search-icon i, .jz-search-bar .jz-search-btn i {
+  vertical-align: top;
+}
+/* line 30, ../../sass/widgets/search-bar.scss */
+.jz-search-bar .jz-search-icon {
+  width: 2em;
+  font-size: 24px;
+  background-color: transparent;
+}
+/* line 35, ../../sass/widgets/search-bar.scss */
+.jz-search-bar .jz-search-btn {
+  float: right;
+}
+/* line 39, ../../sass/widgets/search-bar.scss */
+.jz-search-bar .jz-search-input {
+  overflow: hidden;
+}
+/* line 41, ../../sass/widgets/search-bar.scss */
+.jz-search-bar .jz-search-input input {
+  width: 100%;
+  height: 100%;
+  padding: 3px 10px;
+  vertical-align: top;
+}

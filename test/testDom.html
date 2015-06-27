@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js" charset="utf-8"></script>
+    <style>
+        .test1, .test2 {
+            height: 100px;
+            color: #fff;
+        }
+        .test1 p, .test2 p {
+            line-height: 30px;
+            background-color: #000000;
+        }
+        .test1 {
+            background-color: #008000;
+        }
+        .test2 {
+            background-color: #666;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="test1">
+    <p>test1</p>
+</div>
+<div class="test2">
+    test2
+</div>
+<div>
+    <button>转移</button>
+</div>
+<script>
+    $(".test1 p").click(function() {
+        alert(88);
+    });
+
+    $("button").click(function() {
+        var pDom = $(".test1 p");
+        $(".test2").append(pDom);
+        $(".test1").remove();
+    });
+</script>
+</body>
+</html>

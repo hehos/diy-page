@@ -1,0 +1,362 @@
+@charset "utf-8";
+
+@import "compass";
+@import "variables";
+
+
+.container {
+  position: relative;
+  width: 1000px;
+  margin: auto;
+  padding-bottom: 60px;
+  .content {
+    @include pie-clearfix;
+  }
+}
+
+#view-wrap, #editor-wrap {
+  .item-editoring {
+    outline: 3px solid #008000;
+    //      outline-offset: -4px;
+  }
+}
+
+// 编辑  区域
+// ===========================================
+#editor-wrap {
+  position: relative;
+  left: 10px;
+  float: right;
+  padding: 10px;
+  background-color: #f8f8f8;
+  font-size: 14px;
+  .am-tabs-bd {
+    border-bottom: none;
+  }
+  .inputArea {
+    padding: 10px;
+    border: 1px solid #ddd;
+  }
+  .add-item {
+    .am-btn {
+      margin-right: 10px;
+    }
+  }
+}
+
+// 视图  区域
+// ===========================================
+#view-wrap {
+  float: left;
+  padding: 10px;
+  background-color: #f8f8f8;
+  .control-group {
+    position: relative;
+    padding-bottom: 30px;
+    &.active, &:hover {
+      outline: 2px dashed #fc7d7d;
+    }
+  }
+  .actions-wrap {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    @include pie-clearfix;
+    .action  {
+      float: left;
+      padding: 2px 4px;
+      margin-right: 2px;
+      cursor: pointer;
+      background-color: rgba(0,0,0,.5);
+      color: #fff;
+    }
+  }
+}
+
+// 添加组件区域（视图区域下的）
+// ===========================================
+#add-widgets-panel {
+  width: (5 / 12) * 100%;
+  background-color: #f8f8f8;
+  padding: 10px;
+  h4 {
+    text-align: center;
+    line-height: 30px;
+  }
+  .am-btn {
+    margin: 4px;
+  }
+}
+
+
+// 底部  的按钮
+// ===========================================
+.bottom-action {
+  position: fixed;
+  bottom: 0; left: 0; right: 0; z-index: 100;
+  width: 100%;
+  line-height: 40px;
+  text-align: center;
+  background-color: #fefde2;
+}
+
+
+// 组件的编辑视图样式。
+// =====================================================
+// 公共部分
+.editor-items {
+  margin-bottom: 0;
+  border: 1px solid #ddd;
+  border-top-color: transparent;
+  .editor-item {
+    position: relative;
+    display: inline-block;
+    padding: 3px 5px;
+    margin: 5px;
+    border: 1px solid #ddd;
+    &:hover {
+      .del-btn { display: inline-block; }
+    }
+    .del-btn {
+      display: none;
+      @extend %close-btn;
+    }
+  }
+}
+
+
+// nav
+// ----------------------------------------
+.editor-items {
+  border: 1px solid #ddd;
+  border-top-color: transparent;
+  @include pie-clearfix;
+  .editor-item {
+    position: relative;
+    float: left;
+    padding: 3px 5px;
+    margin: 5px;
+    border: 1px solid #ddd;
+  }
+}
+
+// media-list
+// ----------------------------------------
+.media-list {
+  .add-item-btn {
+    width: 50px;
+    height: 50px;
+    margin: 5px;
+    text-align: center;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    i {
+      @extend %add-item-icon;
+      margin-top: (46px - 16) / 2;
+      box-sizing: content-box;
+    }
+  }
+  .editor-items {
+    border-top-color: #ddd;
+    .editor-item {
+      width: 50px;
+      height: 50px; line-height: 45px;
+      padding: 0;
+      border: 1px solid #ddd;
+    }
+    img { 
+      width: 100%;
+      height: auto;
+      max-height: 50px;
+      vertical-align: middle;
+    }
+  }
+  .am-form-group-sm + .am-form-group-sm {
+    margin-bottom: 0;
+
+    .am-u-sm-10 {
+      padding-bottom: 10px;
+      border-bottom: 1px solid #dddddd;
+      background-color: #fff;
+    }
+  }
+}
+
+// media-showcase
+// ----------------------------------------
+.media-showcase {
+  @include pie-clearfix;
+  .editor-item {
+    padding: 10px;
+    margin: 15px 0;
+    background-color: #fff;
+  }
+  // 左边部分
+  .img-act {
+    height: 80px;
+    line-height: 80px;
+    text-align: center;
+  }
+  .img-upload {
+    display: block;
+    cursor: pointer;
+    a { color: #07d; }
+  }
+  .img-result {
+    display: none;
+    position: relative;
+    img {
+      height: 100%;
+      width: auto;
+    }
+    .img-anew-upload {
+      position: absolute;
+      left: 0; right: 0;
+      bottom: 0;
+      padding: 0 8px;
+      line-height: 30px;
+      background-color: rgba(0,0,0,.6);
+      color: #fff;
+    }
+  }
+  // 右边部分
+  .set-link-trigger, .set-link-modify {
+    color: #07d;
+  }
+  .set-link-result {
+//    display: none;
+    width: 60%;
+    position: relative;
+    padding-left: 6px;
+    padding-right: 6px;
+    margin-right: 2.5em;
+    border-radius: 3px;
+    color: #fff;
+    background-color: #468847;
+    .set-link-result-cont {
+      display: block;
+      @include ellipsis;
+    }
+    .set-link-modify {
+      position: absolute;
+      top: 0; right: -2.5em;
+    }
+  }
+  .sort-desc-icon i { vertical-align: top; padding: 0 8px; }
+  .set-link-pulldown {
+//    display: none;
+    position: relative;
+    left: 3.2em;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    line-height: 1.8em;
+    float: left;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    li {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+    li:hover {
+      background-color: #0000ff;
+      a { color: #fff; }
+    }
+  }
+}
+
+// title
+// -----------------------------------------
+input[type="color"] {
+  padding: .4em !important;
+  height: 2em;
+  background-color: #fff;
+  margin-top: 3px;
+}
+.control-group {
+  margin-bottom: 10px;
+}
+.add-title-link-block {
+  position: relative;
+  background-color: #fff;
+  margin: 1.6rem;
+  padding-top: 1.5rem;
+  .add-title-link-close {
+    @extend %close-btn;
+  }
+  .addTitleLinkBtn { padding-left: 15px; }
+}
+.normalDate {
+  position: relative;
+  .normalDateLink {
+    position: absolute;
+    top: 10px;
+    right: 0;
+    z-index: 10;
+  }
+  div {
+    padding-right: 40px;
+  }
+}
+
+
+// 公共方法样式
+// =============================================
+%close-btn {
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  width: 18px;
+  height: 18px;
+  line-height: 16px;
+  text-align: center;
+  cursor: pointer;
+  color: #fff;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, .2);
+  &:hover {
+    background-color: rgba(0, 0, 0, .7);
+  }
+}
+%add-item-icon {
+  display: inline-block;
+  width: 14px;
+  height: 14px; line-height: 14px;
+  padding: 2px;
+  text-align: center;
+  box-sizing: content-box;
+  border-radius: 50%;
+  background-color: #44bb00;
+  font-size: 10px;
+  color: #fff;
+}
+.editor-del-btn {
+  @extend %close-btn;
+}
+.editor-add-item-icon {
+  @extend %add-item-icon;
+}
+
+
+// 测试性样式
+// ===========================================
+.components-box {
+  background-color: #f9f9f9;
+  & > h1, & > h2, & > h3 {
+    border-top: 2px solid #0066bb;
+    background-color: #d9d9d9;
+  }
+  & > h1 { font-size: 24px }
+  & > h2 { font-size: 20px; }
+  & > h3 { font-size: 18px }
+}
+.am-menu  {
+  padding-top: 47px;
+  border-top: 1px solid #ddd;
+  .am-menu-toggle {
+    top: 0;
+  }
+  .am-menu-toggle-icon, .am-menu-toggle-title {
+    color: #333;
+  }
+}
+

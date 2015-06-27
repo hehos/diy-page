@@ -1,0 +1,63 @@
+@import "compass";
+@import "../variables";
+
+// 橱窗
+.jz-media-showcase, .jz-media-showcase-pc {
+  ul, p { margin: 0; }
+  .jz-media-heading {
+    line-height: 40px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 0;
+    font-weight: normal;
+  }
+
+  .jz-media-body {
+    background-color: #fff;
+    padding-bottom: 15px;
+  }
+  .jz-media-items {
+    @include pie-clearfix;
+  }
+  .jz-media-item {
+    float: left;
+    height: 110px;
+    overflow: hidden;
+    &:first-child { padding-right: 1px; }
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+  .jz-media-headline, .jz-media-explain {
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .jz-media-headline {
+    line-height: 40px;
+    margin-bottom: 3px;
+    @include ellipsis;
+  }
+  .jz-media-explain {
+    font-size: 80%;
+    line-height: 1.3;
+    color: $globalTextColor;
+  }
+}
+.jz-media-showcase {
+  .jz-media-item {
+    width: 3 / 10 * 100%;
+    &:first-child {
+      width: 7 / 10 * 100%;
+      height: 220px;
+    }
+    &:last-child { padding-top: 1px; }
+  }
+}
+.jz-media-showcase-pc {
+  .jz-media-item {
+    width: 33.3%;
+    &:last-child { padding-left: 1px; }
+  }
+}

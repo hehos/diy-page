@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js" type="text/javascript" charset="utf-8"></script>
+
+    <title></title>
+</head>
+<body>
+<script>
+    var labels = [
+        // 简单类型
+        ["大图标", "竖排列表", "简单介绍信息", "图标", "字体图标"],
+        // 普通类型
+        ["default","水平导航","标签式","宽度自适应"],
+        // 导航条
+        [],
+        // 菜单导航
+        ["default", "下拉1","下拉2",
+            "default","文本触发下拉","图标触发下拉",
+            "左侧滑","右侧滑","侧滑横排"]
+    ];
+//    alert(Array.isArray(labels));
+
+    var ary = [4,5,1];
+    var newAry = [1,2,3];
+    console.log(ary["0"]);
+
+    // 测试array排序 sort
+    var defaultItems = [
+        {
+            cateId: 3,
+            itemId: 0,
+            imgSrc: "../img/temp/media-default0.jpg",
+            url: "javascript:void(0);",
+            title: "此处是媒体的名称1",
+            desc: "此处是媒体的描述信息1",
+            price: 888.88
+        },
+        {
+            cateId: 0,
+            itemId: 1,
+            imgSrc: "../img/temp/media-default1.jpg",
+            url: "javascript:void(0);",
+            title: "此处是媒体的名称1",
+            desc: "此处是媒体的描述信息1",
+            price: 0000
+        },
+        {
+            cateId: 1,
+            itemId: 2,
+            imgSrc: "../img/temp/media-default2.jpg",
+            url: "javascript:void(0);",
+            title: "此处是媒体的名称2",
+            desc: "此处是媒体的描述信息2",
+            price: 1111111
+        },
+        {
+            cateId: 1,
+            itemId: 2,
+            imgSrc: "../img/temp/media-default2.jpg",
+            url: "javascript:void(0);",
+            title: "此处是媒体的名称2",
+            desc: "此处是媒体的描述信息2",
+            price: 1111111
+        }
+    ]
+    defaultItems.sort(function(o1, o2) {
+        return o1.cateId - o2.cateId;
+    })
+//    console.log(defaultItems);
+
+</script>
+</body>
+</html>

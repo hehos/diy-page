@@ -1,0 +1,19 @@
+html，css编码规范：参考 http://codeguide.bootcss.com/
+
+css规范补充：
+    1，css代码中遵循：不使用中文原则（避免乱码时影响代码）
+        如：font-family: "微软雅黑";（bad example）
+            font-family: "microsoft yahei";（good example）
+    2，css注释遵循：注释符前后添加空格（原因同上）
+        如：/*注释*/（bad example）
+            /* 注释 */（good example）
+    3，组合选择器遵循：放在单选择器前面。
+        如：.test1 { } .test2 { } .test1, .test2 { }（bad example）
+            .test1, .test2 { } .test1 { } .test2 { } （good example）
+
+    4，中文注释：添加中文注释时，使用空格跟asic字符隔开
+
+    5，使用样式命名空间（特殊前缀）来杜绝样式冲突。
+        5.1，没有添加特殊前缀的选择器类型：
+            # 雪碧图标，icons-前缀。
+            # 第三方样式选择器前缀。如amazeui的am-前缀

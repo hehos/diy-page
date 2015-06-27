@@ -1,0 +1,57 @@
+/* line 6, ../../sass/widgets/title.scss */
+.jz-title {
+  padding: 10px;
+}
+/* line 9, ../../sass/widgets/title.scss */
+.jz-title .title-link, .jz-title .sub-title-link {
+  cursor: pointer;
+  color: #6666ff;
+  font-size: 1.4rem;
+  font-weight: normal;
+}
+
+/* line 16, ../../sass/widgets/title.scss */
+.jz-title-title, .jz-sub-title {
+  margin: 0;
+}
+
+/* line 19, ../../sass/widgets/title.scss */
+.jz-title-title {
+  font-size: 1.8rem;
+  line-height: 1.6em;
+  font-weight: 500;
+  font-family: "Microsoft Yahei", Tahoma, Arial, Helvetica, STHeiti;
+}
+/* line 24, ../../sass/widgets/title.scss */
+.jz-title-title .title-split {
+  display: inline-block;
+  margin: 0 3px;
+  font-size: 30px;
+  height: 28.8px;
+  color: #999999;
+}
+/* line 31, ../../sass/widgets/title.scss */
+.jz-title-title * {
+  vertical-align: bottom;
+}
+
+/* line 34, ../../sass/widgets/title.scss */
+.jz-sub-title {
+  margin-top: 5px;
+  font-size: 1.4rem;
+  color: #666666;
+}
+/* line 38, ../../sass/widgets/title.scss */
+.jz-sub-title .sub-title-date, .jz-sub-title .sub-title-author {
+  padding-right: 10px;
+}
+
+/* line 42, ../../sass/widgets/title.scss */
+.jz-title-normal .sub-title-date, .jz-title-normal .sub-title-author, .jz-title-normal .sub-title-link {
+  display: none;
+}
+
+/* line 45, ../../sass/widgets/title.scss */
+.jz-title-weixin .sub-title-txt, .jz-title-weixin .title-link-container {
+  display: none;
+}

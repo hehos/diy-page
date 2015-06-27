@@ -1,0 +1,87 @@
+/* line 6, ../../sass/widgets/media-showcase.scss */
+.jz-media-showcase ul, .jz-media-showcase p, .jz-media-showcase-pc ul, .jz-media-showcase-pc p {
+  margin: 0;
+}
+/* line 7, ../../sass/widgets/media-showcase.scss */
+.jz-media-showcase .jz-media-heading, .jz-media-showcase-pc .jz-media-heading {
+  line-height: 40px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin: 0;
+  font-weight: normal;
+}
+/* line 15, ../../sass/widgets/media-showcase.scss */
+.jz-media-showcase .jz-media-body, .jz-media-showcase-pc .jz-media-body {
+  background-color: #fff;
+  padding-bottom: 15px;
+}
+/* line 19, ../../sass/widgets/media-showcase.scss */
+.jz-media-showcase .jz-media-items, .jz-media-showcase-pc .jz-media-items {
+  *zoom: 1;
+}
+/* line 38, ../../../../../../usr/local/ruby-2.1.4/lib/ruby/gems/2.1.0/gems/compass-core-1.0.1/stylesheets/compass/utilities/general/_clearfix.scss */
+.jz-media-showcase .jz-media-items:after, .jz-media-showcase-pc .jz-media-items:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+/* line 22, ../../sass/widgets/media-showcase.scss */
+.jz-media-showcase .jz-media-item, .jz-media-showcase-pc .jz-media-item {
+  float: left;
+  height: 110px;
+  overflow: hidden;
+}
+/* line 26, ../../sass/widgets/media-showcase.scss */
+.jz-media-showcase .jz-media-item:first-child, .jz-media-showcase-pc .jz-media-item:first-child {
+  padding-right: 1px;
+}
+/* line 27, ../../sass/widgets/media-showcase.scss */
+.jz-media-showcase .jz-media-item img, .jz-media-showcase-pc .jz-media-item img {
+  width: 100%;
+  height: auto;
+}
+/* line 32, ../../sass/widgets/media-showcase.scss */
+.jz-media-showcase .jz-media-headline, .jz-media-showcase .jz-media-explain, .jz-media-showcase-pc .jz-media-headline, .jz-media-showcase-pc .jz-media-explain {
+  text-align: center;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+/* line 37, ../../sass/widgets/media-showcase.scss */
+.jz-media-showcase .jz-media-headline, .jz-media-showcase-pc .jz-media-headline {
+  line-height: 40px;
+  margin-bottom: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+/* line 42, ../../sass/widgets/media-showcase.scss */
+.jz-media-showcase .jz-media-explain, .jz-media-showcase-pc .jz-media-explain {
+  font-size: 80%;
+  line-height: 1.3;
+  color: #333;
+}
+
+/* line 49, ../../sass/widgets/media-showcase.scss */
+.jz-media-showcase .jz-media-item {
+  width: 30%;
+}
+/* line 51, ../../sass/widgets/media-showcase.scss */
+.jz-media-showcase .jz-media-item:first-child {
+  width: 70%;
+  height: 220px;
+}
+/* line 55, ../../sass/widgets/media-showcase.scss */
+.jz-media-showcase .jz-media-item:last-child {
+  padding-top: 1px;
+}
+
+/* line 59, ../../sass/widgets/media-showcase.scss */
+.jz-media-showcase-pc .jz-media-item {
+  width: 33.3%;
+}
+/* line 61, ../../sass/widgets/media-showcase.scss */
+.jz-media-showcase-pc .jz-media-item:last-child {
+  padding-left: 1px;
+}

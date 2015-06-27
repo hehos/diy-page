@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../js/base.js"></script>
+    <style>
+        .testHeight {
+            height: 500px;
+            background-color: #ddd;
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+
+<script>
+    var ary = [
+        {name: "zhangshan1", age: 22},
+        {name: "zhangshan2", age: 22},
+        {name: "zhangshan3", age: 22}
+    ]
+    JZD.Tool.delAryByIdx(0, ary);
+    debugger;
+
+</script>
+
+<div class="jz-title jz-title-normal">
+    <h2 class="jz-title-title">标题（这是默认的标题文本）
+        <span class="title-link-container">
+            <span class="title-split">-</span>
+            <a href="jc001.cn" class="title-link">九正科技</a>
+        </span>
+    </h2>
+    <div class="jz-sub-title">
+        副标题
+        <span class="sub-title-date">2015-08-9</span>
+        <span class="sub-title-author">张三</span>
+        <a href="jc001.cn" class="sub-title-link" href="">九正科技</a>
+    </div>
+</div>
+
+<div class="testHeight">
+
+
+</div>
+<div>上面有一个display: none;的div</div>
+
+<script>
+//    alert($(".testHeight").height());
+//    alert(Boolean(-1));
+
+
+    var p = /\/\w+-*\w*\./;
+    var text = "/fdajffjkda.jpg";
+
+//    alert(text.replace(p, "/3."));
+    var ary = [];
+//    alert(ary instanceof Array);
+
+    // 测试在构造函数里访问自己的方法
+    function Test(name) {
+        this.name = name;
+        if(typeof this.init == 'function'){
+            debugger;
+            this.init();
+        }
+    }
+    Test.prototype.init = function() {
+        alert(88);
+    }
+
+</script>
+
+</body>
+</html>

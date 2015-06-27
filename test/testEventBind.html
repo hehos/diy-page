@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+
+<script>
+    var JZD =  {
+        createClass : function(constructor, methods, supper, statics) {
+            // 如果没有构造方法，那么有父类则继承父类，没有则创建一个空的构造函数。
+            if(typeof constructor != 'function'){
+                constructor = (typeof supper == 'function') ?
+                        function() {
+                            // arguments表示在new对象时所传递的参数，与构造函数是否定义参数变量无关
+                            supper.apply(this, arguments); }
+                        : function() {};
+            }
+            // 如果父类存在，继承父类方法。
+            if(supper && typeof supper.prototype == 'object')
+                this.extend(constructor.prototype, supper.prototype);
+            // 创建自己的方法
+            if(typeof methods == 'object')
+                this.extend(constructor.prototype, methods);
+            // 创建静态的属性。
+            if(typeof statics == 'object')
+                this.extend(constructor, statics);
+            // 最后返回具有具有方法、属性、静态属性的构造方法。
+            return constructor;
+        },
+
+        extend : function(A, $) {
+            for (var _ in $) A[_] = $[_];
+            return A
+        }
+    };
+
+
+    JZD.Page = (function () {
+        var constructor = function(cl){
+            this.cl = cl;
+            if(typeof this.init == 'function'){
+                this.init();
+            }
+            this.widgets = [];
+        };
+
+        var methods = {
+            init: function() {
+                var that = this;
+                var widgets = this.data.widgets;
+                if(widgets.length != 0) {
+                    // 加载js文件并生产添加widget的面板dom，
+                    var template1 = "<script src='../js/widgets/{fileName}.js'><\/script>";
+                    var template2 = "<a class='js-new-field btn btn-default' " +
+                            "data-field-type='{widget}'>{widget}</a>"
+                    var loadJsSrc = "", addWidgetSrc = "";
+                    for(var i = 0; i < widgets.length; i++) {
+                        var html = JZD.Html.template(template1, {"fileName": widgets[i]});
+                        loadJsSrc += html;
+                        var html2 = JZD.Html.template(template2, {"widget": widgets[i]});
+                        addWidgetSrc += html2;
+                    }
+                    //$("body").after(loadJsSrc);
+                    $("#add-widgets-panel").append(addWidgetSrc);
+                    // 给添加widget面板dom绑定事件。
+                    $("#add-widgets-panel .js-new-field").click(function() {
+                        that.addWidget();
+                    });
+                }
+            },
+
+            data: {
+                "widgets": [
+                    "media-list",
+                    "rich-text",
+                    "nav",
+                    "slider"
+                ]
+            },
+
+            addWidget : function(){
+                // 创建dom并在相应的位置加入文档流。
+                var dom = document.createElement("div");
+                // js文件名与类名的关系是：aaa-bbb(文件名）：AaaBbb(类名）
+                var className = JZD.Tool.parseFileName(fileName);
+                var widget = new JZD.Widget[className]($(dom));
+
+                // @Test
+                $(dom).addClass("control-group" + " count" + JZD.Page.count++);
+
+                // widget组边框样式。
+                $(dom).click(function() {
+                    $("#view-wrap .control-group").removeClass("active");
+                    $(this).addClass("active");
+                });
+
+                $("#view-wrap").append($(dom));
+                // 渲染出 widget
+                widget.render();
+                $(dom).find(".edit").click(function () {
+                    var editor =
+                            new JZD.Editor[className](
+                                    $('#editor-wrap'),
+                                    widget.getData());
+                    // @Test
+                    editor.cl.addClass("count" + JZD.Page.count++);
+
+                    // 绑定监听
+                    widget.bindEditor(editor);
+                    editor.render();
+                });
+            }
+
+        };
+        return JZD.createClass(constructor, methods, null, {"count": 1});
+    })();
+
+
+    var page = new JZD.Page();
+</script>
+
+</body>
+</html>

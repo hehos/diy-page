@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+</head>
+<body>
+    <ul>
+        <li>
+            <label for="t1">手动绑定表单（不属于label子元素） </label><input id="t1" type="radio"/>
+        </li>
+        <li>
+            <label for="t2">手动绑定表单（属于label子元素） </label>    <label>被非自己的另一个label绑定<input id="t2" type="radio"/></label>
+        </li>
+        <li>
+            <label for="t3">手动绑定表单（属于自己子元素）<input id="t3" type="radio"/> </label>
+        </li>
+        <li>
+            <label>test1 未手动绑定表单（但自动绑定给自己）<input type="radio"/> </label>
+        </li>
+        <li>
+            <label>test1 未手动绑定表单</label><input type="radio"/>
+        </li>
+    </ul>
+
+    <button  onclick="f1();" type="button">测试label标签的不同html结构，不同触发事件情况</button >
+    <button  onclick="f2();" type="button">label标签在绑定了表单后的点击事件冒泡</button >
+
+    <p style="color: red">*点击上面按钮测试前需刷新页面！</p>
+</body>
+<script>
+    function f1() {
+        $("label").click(function() {
+            alert(88);
+        });
+    }
+    function f2() {
+        $("li").click(function() {
+            alert(88);
+        });
+    }
+</script>
+</html>

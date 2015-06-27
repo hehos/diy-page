@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js" type="text/javascript" charset="utf-8"></script>
+
+    <title></title>
+</head>
+<body>
+
+<div>
+    <input type="radio" name="test">
+    <input type="radio" name="test">
+    <input type="radio" name="test">
+</div>
+<script>
+    // 讨论的目标input：第一个单选按钮 $("div input")[0]
+    // 写法1
+        $("div input").change(function() {
+            // 目标input选中时，能触发。
+            // 目标input未选中时，也能触发
+            alert(88);
+        });
+
+    // 写法2
+//    $($("div input")[0]).change(function() {
+//        // 目标input选中时，能触发。
+//        // 目标input未选中时，不能触发？？
+//        alert(88);
+//    });
+    // 以上两种写法为什么有区别。不解？？！！！
+</script>
+
+</body>
+</html>

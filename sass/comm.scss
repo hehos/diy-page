@@ -1,0 +1,88 @@
+@charset "utf-8";
+
+@import "compass";
+// 配置compass生成雪碧图的参数。
+//自动输出尺寸
+$icons-sprite-dimensions: true;
+
+@import "icons/*.png"; // 导入jz-icon目录下所有png图片
+
+@include all-icons-sprites; // 输出所有的雪碧图css
+
+@import "variables";
+
+
+// 全局性样式
+[class*='icon'] {
+  display: inline-block;
+  vertical-align: top;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+ul, li { list-style: none; }
+label { font-weight: normal; }
+
+
+// 全局类
+ 
+// === 辅助类  
+// --- 功能单一                 使用"a-"前缀
+.a-block { display: block !important; }
+.a-inline-block { display: inline-block !important; }
+.a-font-normal { font-weight: normal !important; }
+.a-vertical-align-top { vertical-align: top !important; }
+.a-vertical-align-bottom { vertical-align: bottom !important; }
+
+// color
+.a-red { color: $red !important; }
+.a-white { color: $white !important; }
+.a-gray { color: $gray !important; }
+.a-gray-dark { color: $gray-dark !important; }
+.a-blue { color: $blue !important; }
+.a-skyblue { color: $skyblue !important; }
+.a-orange { color: $orange !important; }
+.a-green {color: $green !important; }
+
+.a-bg-yellow { background-color: $yellow !important; }
+.a-bg-yellowLight { background-color: $yellow-light !important; }
+.a-bg-yellowTint { background-color: $yellow-tint !important; }
+.a-bg-white { background-color: $white !important; }
+.a-bg-gray-shallow { background-color: $gray-shallow !important; }
+
+// === 原件类
+// --- 功能小范围封装      使用"u-"前缀  
+// 左适应和由适应
+.u-adaptive-right, .u-adaptive-left {
+    @include pie-clearfix; 
+    .adaptive-fixed {
+        position: relative;
+    }
+    .adaptive-container {
+        width: 100%;
+    }
+}
+.u-adaptive-right {
+    .adaptive-fixed {
+        float: left;
+    }
+    .adaptive-container {
+        float: right;
+    }
+}
+.u-adaptive-left {
+    .adaptive-fixed {
+        float: right;
+    }
+    .adaptive-container {
+        float: left; 
+    }
+}
+
+
+
+
+

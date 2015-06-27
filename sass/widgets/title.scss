@@ -1,0 +1,48 @@
+@import "compass";
+@import "../variables";
+// 文本标题
+
+
+.jz-title {
+  padding: 10px;
+
+  .title-link, .sub-title-link {
+    cursor: pointer;
+    color: $skyblue;
+    font-size: 1.4rem;
+    font-weight: normal;
+  }
+}
+.jz-title-title, .jz-sub-title {
+  margin: 0;
+}
+.jz-title-title {
+  font-size: 1.8rem;
+  line-height: 1.6em;
+  font-weight: 500;
+  font-family: "Microsoft Yahei", Tahoma, Arial, Helvetica, STHeiti;
+  .title-split {
+    display: inline-block;
+    margin: 0 3px;
+    font-size: 30px;
+    height: 1.6 * 18px;
+    color: $gray-light;
+  }
+  * { vertical-align: bottom; }
+}
+
+.jz-sub-title {
+  margin-top: 5px;
+  font-size: 1.4rem;
+  color: $gray-primary;
+  .sub-title-date, .sub-title-author { padding-right: 10px; }
+}
+
+.jz-title-normal {
+  .sub-title-date, .sub-title-author, .sub-title-link { display: none; }
+}
+.jz-title-weixin {
+  .sub-title-txt, .title-link-container {
+    display: none;
+  }
+}

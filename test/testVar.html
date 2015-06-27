@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    var Class1 = (function() {
+        var data = {
+            "name": "zhangsan",
+            "age": 20
+        }
+        return function() {
+            this.data = data;
+        }
+    })();
+
+    var obj1 = new Class1();
+    console.log(obj1.data.name);// zhangsan
+
+    obj1.data.name = "lishi";
+
+    var obj2 = new Class1();
+    console.log(obj2.data.name); //lishi
+
+</script>
+</body>
+</html>

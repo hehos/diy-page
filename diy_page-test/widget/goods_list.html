@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>goods_list.html</title>
+
+    <link href="http://kdt-static.qiniucdn.com/v2/css/bootstrap_140705.css" rel="stylesheet" type="text/css" />
+    <link href="http://kdt-static.qiniucdn.com/v2/build_css/stylesheets/www/projects/pc_84a1f2868f.css" rel="stylesheet" type="text/css" />
+    <style>
+        .app-init-container{ margin:40px 20px;}
+        .app-design .app-preview .actions{ display: block; }
+    </style>
+</head>
+<body>
+
+<script src="http://ui.9z.cn/js/jquery/jquery-1.11.1.min.js"></script>
+
+<script src="../base.js"></script>
+<script src="goods_list.js"></script>
+<script src="../editor/goods_list.js"></script>
+
+
+<div class="app-init-container">
+    <div class="js-app-main">
+        <div class="app-design clearfix">
+            <div class="app-preview">
+                <div class="app-header"></div>
+                <div class="app-entry" id="widget_wrap">
+                    <div id="3307554"  class="app-fields js-fields-region">
+                        <div class="app-field clearfix editing">
+                            <div class="control-group">
+                                <!--html!-->
+                                <div class="component-border"></div>
+                            </div>
+
+                            <div class="actions">
+                                <div class="actions-wrap">
+                                    <a href="#none" class="edit">Edit</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div  class="app-sidebar">
+                <div id="editor_wrap" class="app-sidebar-inner js-sidebar-region"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+var data = {
+    size : 2,
+    size_type : 1,
+    title : true,
+    price : true,
+    buy_btn_type : 1,
+    items : []
+};
+
+var widget = new JZD.Widget.GoodsList($('#widget_wrap .control-group'), data);
+widget.render();
+$('#widget_wrap .edit').click(function(){
+    var editor = new JZD.Editor.GoodsList($('#editor_wrap'), widget.getData());
+    widget.bindEditor(editor);
+    editor.render();
+});
+</script>
+</body>
+</html>

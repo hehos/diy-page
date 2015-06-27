@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    var text = "abc.defghi.jklmno";
+    var p = /[^.]*\..{3}/;
+
+    var m = p.exec(text);
+//    console.log(m[0]);
+
+
+    var p2 = /(?=\bre)\w+\b/g;
+    var text2 = "reading a book readdd a book";
+    var m2 = p2.exec(text2);
+//    console.log(m[0] + " " + m[1] + " " + m[2]);
+//    debugger;
+    console.log(text2.replace(p2, "#"));
+
+    var p3 = /\D*(\d+)/g;
+    var text3 = "dfas";
+    var m3 = p3.exec(text3);
+    var m4 = p3.exec(text3);
+    debugger;
+
+</script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<style>
+    .test {
+        margin:30px;
+        width:200px;
+        height:100px;
+        background-color:yellow;
+    }
+
+</style>
+<div id="transformDiv" class="test">
+    hello
+</div>
+<button id="transformBtn" onclick="transform20(20);">旋转 div 元素20度</button>
+<button id="transformBtn" onclick="transform20(40);">旋转 div 元素40度</button>
+<script>
+    function transform20(deg) {
+        document.getElementById("transformDiv").style.transform =
+                "rotate(" + deg + "deg)";
+    }
+</script>
+</body>
+</html>

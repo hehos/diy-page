@@ -1,0 +1,792 @@
+"use strict";
+var JZD =  {
+    createClass : function(constructor, methods, supper, statics) {
+        // 如果没有构造方法，那么有父类则继承父类，没有则创建一个空的构造函数。
+        if(typeof constructor != 'function'){
+            constructor = (typeof supper == 'function') ?
+                function() {
+                    // arguments表示在new对象时所传递的参数，与构造函数是否定义参数变量无关
+                    supper.apply(this, arguments); }
+                : function() {};
+        }
+        // 如果父类存在，继承父类方法。
+        if(supper && typeof supper.prototype == 'object')
+            this.extend(constructor.prototype, supper.prototype);
+        // 创建自己的方法
+        if(typeof methods == 'object')
+            this.extend(constructor.prototype, methods);
+        // 创建静态的属性。
+        if(typeof statics == 'object')
+            this.extend(constructor, statics);
+        // 最后返回具有具有方法、属性、静态属性的构造方法。
+        return constructor;
+    },
+
+    extend : function(A, $) {
+        for (var _ in $) A[_] = $[_];
+        return A
+    },
+    // 使用模式，0：表示静态模式。1：表示动态模式（数据来源调用接口）。
+    // 默认值为true（动态模式）
+    schema: false
+
+};
+
+JZD.Html = {
+    template : function(s, config, reserve) {
+        return s.replace(/\{([^}]*)\}/g,
+            (typeof config == 'object') ?
+            function(m, i) {
+                var ret = config[i];
+                return typeof ret == "undefined" && reserve ? m : ret;
+            }: config);
+    },
+    radioHtml:
+        '<label class="am-radio-inline">' +
+        '   <input type="radio" data-prop-name="{propNames}" value="{value}">{label}' +
+        '</label>',
+    checkboxHtml:
+        '<label class="am-checkbox-inline">' +
+        '    <input type="checkbox" data-prop-name="{propNames}" value="">{label}' +
+        '</label>',
+    inputHtml:
+        '<label class="am-u-sm-2 am-form-label">{label}</label>' +
+        '<div class="am-u-sm-10 js-input">' +
+        '    <input type="text" data-prop-name="{propNames}" value="{value}">' +
+        '</div>',
+    textareaHtml:
+        '<label class="am-u-sm-2 am-form-label">内容区说明</label>' +
+        '<div class="am-u-sm-10"> ' +
+        '   <textarea name="" cols="10" rows="3">内容区说明</textarea>' +
+        '</div>',
+    imgHtml: '<img src="../img/temp/component/{imgFileName}" alt="">',
+    iconHtml: '<i class="{className}"></i>'
+
+
+};
+JZD.Template = {
+    radio:
+        '<label class="am-radio-inline">' +
+        '   <input type="radio" data-prop-name="{propNames}" value="{value}">{label}' +
+        '</label>',
+    checkbox:
+        '<label class="am-checkbox-inline">' +
+        '    <input type="checkbox" data-prop-name="{propNames}" value="">{label}' +
+        '</label>',
+    input:
+        '<label class="am-u-sm-2 am-form-label">{label}</label>' +
+        '<div class="am-u-sm-10 js-input">' +
+        '    <input type="text" data-prop-name="{propNames}" value="{value}">' +
+        '</div>',
+    textarea:
+        '<label class="am-u-sm-2 am-form-label">{label}</label>' +
+        '<div class="am-u-sm-10 js-input"> ' +
+        '   <textarea name="" cols="10" rows="3" data-prop-name="{propNames}">{value}</textarea>' +
+        '</div>',
+    img: '<img src="../img/temp/component/{imgFileName}" alt="">',
+    icon: '<i class="{className}"></i>'
+}
+
+JZD.Event = {
+    on : function(evt, callback){
+        if(!this.listeners[evt]){
+            this.listeners[evt] = [];
+        }
+        this.listeners[evt].push(callback);
+        return this;
+    },
+
+    trigger : function(evt){
+        if(!this.listeners[evt]){
+            return;
+        }
+
+        // 函数期望的参数是('data.type.change', 'type', type)，所以去掉第一个参数
+        var args = [].slice.call(arguments, 1);
+        var len = this.listeners[evt].length;
+        for(var i = 0; i < len; i++){
+            this.listeners[evt][i].apply(this, args);
+        }
+    }
+}
+
+// widget
+JZD.Widget = (function(){
+    var constructor = function(cl, data, options){
+        this.cl = cl;
+        if(typeof data == 'object'){
+            this.data = data;
+        }
+        this.options = options;
+    };
+
+    var methods = {
+        bindEditor : function(editor){
+            var that = this;
+            // 绑定数据改变事件
+            editor.on('data.change', function(key, value){
+                that.data[key] = value;
+                that.render();
+            });
+
+            // 绑定数据改变事件但不渲染组件视图
+            editor.on('data.change.notRender', function(key, value){
+                that.data[key] = value;
+            });
+
+            // 仅仅只是渲染
+            editor.on('data.change.onlyRender', function(){
+                that.render();
+            });
+
+            // 绑定复杂类型数据事件
+            // 添加item。
+            editor.on("add.data.item", function(key, data) {
+                that.data[key].push(data);
+                that.render();
+            });
+            // 删除item。
+            editor.on("del.data.item", function(key, itemId) {
+                var item = null;
+                var items = that.data[key];
+                for(i in items) {
+                    if(items[i].itemId == itemId) {
+                        item = items[i];
+                        break;
+                    }
+                }
+                JZD.Tool.delAryByEle(item, items);
+                that.render();
+            });
+
+            // 包含插件的组件
+            editor.on("invoke.plugin", function(pluginName, options) {
+                JZD.Tool.invokePlugin(pluginName, options);
+            });
+
+        },
+
+        getHtml : function(){
+            console.log("Abstract method(getHtml)");
+        },
+
+        render : function(){
+            var html = this.getHtml();
+            // 将绑定了事件的dom克隆出来添加到新重新渲染的dom中。
+            var actionWrap = this.cl.find(".actions-wrap").clone(true);
+
+            this.cl.html(html);
+            if(actionWrap.length !=0) {
+                this.cl.append(actionWrap);
+            } else {
+                this.cl.append(
+                    '<div class="actions-wrap">' +
+                    '<span class="action edit">编辑</span>' +
+                    '<span class="action add">加内容</span>' +
+                    '<span class="action delete">删除</span>' +
+                    '</div>');
+            }
+
+            if(typeof this.initDom == "function") {
+                this.initDom();
+            }
+
+            if(typeof this.domAction == "function") {
+                this.domAction();
+            }
+        },
+        getData : function(){
+            return this.data;
+        }
+    };
+
+    return JZD.createClass(constructor, methods);
+})();
+
+// editor
+JZD.Editor = (function(){
+    var constructor = function(cl, data, options){
+        this.cl = cl;
+        if(typeof data == 'object'){
+            this.data = data;
+       	}
+        this.options = options;
+
+        if(typeof this.init == 'function'){
+            this.init();
+        }
+
+        // 将要处理的事件存放在数组中。
+        this.listeners = {};
+    };
+
+    var methods = JZD.extend({
+        init: null,
+
+        getHtml : function(){
+            console.log("Abstract method(getHtml)");
+        },
+        render : function(){
+            var html = this.getHtml();
+            this.cl.html(html);
+            if(typeof this.initDom == "function") {
+                this.initDom();
+            }
+            this.initEvent();
+            if(typeof this.domAction == "function") {
+                this.domAction();
+            }
+        },
+        initDom: function() {
+            var that = this;
+            var data = this.data;
+
+            // 生成单选按钮的name属性值。
+            var radioGroups = $(".js-radioGroup");
+            for(var i in radioGroups) {
+                // radioGroups是jq对象，for in 语句i是字符串，不然有问题！
+                var radios = $(radioGroups[parseInt(i)]).find("input[type='radio']");
+                for(var j in radios) {
+                    var radioNameAttr = $(radios[parseInt(j)]).attr("name");
+                    // 1，没有设置过name属性需设置name属性
+                    // 2，嵌套在了.radioGroup内的.radioGroup需设置name属性
+                    var pattern = /radio\d+/;
+                    if(radioNameAttr == "" ||
+                        radioNameAttr == undefined ||
+                        pattern.test(radioNameAttr)) {
+                            $(radios[parseInt(j)]).attr("name", "radio" + i);
+                    }
+                }
+            }
+
+            // 映射单选和复选按钮的相应状态为选中或者不选中
+            for(var key in data) {
+                // 单选
+                if (typeof data[key] == "string" || typeof data[key] == "number") {
+                    var className = ".am-radio-inline [value='" + data[key] + "']";
+                    $(className).attr("checked", true);
+                }
+                // 多选
+                if (typeof data[key] == "boolean") {
+                    var className = ".am-checkbox-inline [data-prop-name='" + key + "']"
+                    $(className).attr("checked", data[key]);
+                }
+            }
+        },
+        initEvent : function(){
+            var that = this;
+            // 输入框 单选框 多选框
+            var cln =
+                ".js-input input, " +
+                ".js-input textarea, " +
+                ".am-radio-inline input, " +
+                ".am-checkbox-inline input";
+            $(cln).change(function() {
+                var property = $(this).attr("data-prop-name");
+                if($(this).attr("type") == "checkbox") {
+                    that.trigger('data.change', property, this.checked);
+                } else {
+                    that.trigger('data.change', property, this.value);
+                }
+            });
+            // 监听添加条目按钮点击事件
+            this.watchAddItemBtn();
+        },
+        getTemplateData: function(template, data, type) {
+            if(data == undefined || Object.keys(data).length == 0) {
+                return {};
+            }
+            var htmlData = {};
+            for(var i = 0; i < data.labels.length; i++) {
+                var propNames = data.propNames[i];
+                // 如果该处的属性值为1，那么就跟前面的属性值相同。（参见nav导航模块的数据结构说明）。
+                if(propNames == 1) {
+                    data.propNames[i] = data.propNames[i-1];
+                }
+
+                // value值的设定逻辑
+                // value值逻辑解释：
+                // 如果配置数据中的value没有,那么就去对象中对应属性的值
+                // 如果对象中对应属性没有值，那么就取具有items属性组件的activeItem对象的值。
+                var value = "";
+                if(data.values[i] == undefined || data.values == undefined) {
+                    var attr= data.propNames[i];
+                    var value = this.data[attr];
+                    if(value == undefined) {
+                        value = this.data.activeItem[attr];
+                    }
+                } else {
+                    value = data.values[i];
+                }
+                // 构建一个表单元素的模型数据
+                var anData = {
+                    label: data.labels[i],
+                    // input类型获取对象data里对应属性的值。
+                    // checkbox类型的模版因为没有｛value},所以不会被匹配出相应值。
+                    value: value,
+                    propNames: data.propNames[i]
+                };
+                htmlData[type + "-html" + i] = JZD.Html.template(
+                    template,
+                    anData, true);
+            }
+            return htmlData;
+        },
+        _getHtml: function(configs) {
+            var template = configs.template;
+            /**
+             * 返回的模板结构为：
+             * '<div>
+             *     {radio0}
+             *     {radio1}
+             *     {radio2} .....
+             * </div>'
+              */
+            template =
+                JZD.Tool.rebuildTemplate("radio",
+                JZD.Tool.rebuildTemplate("checkbox",
+                JZD.Tool.rebuildTemplate("input",
+                JZD.Tool.rebuildTemplate("textarea", template))));
+
+            var radios = configs.radios;
+            var checkboxs = configs.checkboxs;
+            var inputs = configs.inputs;
+            var textareas = configs.textareas;
+            /**
+            * 返回的数据结构为
+            * {
+            *   radio0：<input />
+            *   radio1：<input /> .....
+            * }
+            * */
+            var radiosData = this.getTemplateData(JZD.Template.radio, radios, "radio");
+            var checkboxsData = this.getTemplateData(JZD.Template.checkbox, checkboxs, "checkbox");
+            var inputsData = this.getTemplateData(JZD.Template.input, inputs, "input");
+            var textareasData = this.getTemplateData(JZD.Template.textarea, textareas, "textarea");
+
+            var templateData = JZD.Tool.concatJson(
+                radiosData, checkboxsData, inputsData, textareasData);
+
+            return JZD.Html.template(template, templateData, true);
+        },
+        watchAddItemBtn: function() {
+            var that = this;
+            $(".js-addItemBtn").click(function () {
+                that.addItem();
+            })
+        },
+        addItem: function() {
+            // 判断是不是第一次添加item
+            if(this.data.items == this.data.defaultItems) {
+                this.data.items = []; // 如果items的数据为默认数据则清空。
+            }
+            if(JZD.schema) {
+                this.addSynItem();
+            } else {
+                this.addTestItem();
+            }
+            this.trigger("data.change.onlyRender");
+        },
+        addSynItem: function() {
+            var data = this.getSynItemData();
+            this.data.items = this.data.items.concat(data);
+            this.addItemHtml(this.constructor.configs, data);
+        },
+        addTestItem: function() {
+            var items = this.data.items;
+            var itemData = JZD.Tool.depthClone(this.data.itemDataTemplate);
+
+            itemData = this.getTestItemData(itemData);
+            itemData.itemId = items.length;
+            items.push(itemData);
+            this.addItemHtml(this.constructor.configs, itemData);
+        },
+        addItemHtml: function(configs, data) {
+            var items = this.data.items;
+            var itemTemplate = configs.itemTemplate;
+            var itemHtml = "";
+            // 点击预览视图显示items
+            var itemAry = [];
+            if(data == undefined) { // 没有传递数据，显示使用items数据（点击预览视图触发时）
+                itemAry = items;
+            } else if(data instanceof Array) { // 传递了一个数组（多选添加时）
+                var itemAry =
+                    JZD.Tool.getArySubEle(items, items.length - data.length);
+            } else { // 添加一个数据（单个添加时）
+                itemAry.push(data);
+            }
+            for(var i in itemAry) {
+                itemHtml += JZD.Html.template(itemTemplate, itemAry[i], true);
+            }
+            $(".js-editorItems").append(itemHtml);
+            // 给删除按钮绑定事件监听
+            this.watchDelItem();
+        },
+        watchDelItem: function() {
+            var that = this;
+            // 删除
+            var delsDom =  $(".js-delBtn");
+            var delDom =  $(delsDom[delsDom.length-1]);
+            delsDom.click(function() {
+                that.delItem.apply(this, [that]);
+            });
+        },
+        delItem: function() {
+            var that = arguments[0];
+            var items = that.data.items;
+            var itemDom = $(this).parent(".js-editorItem");
+            var itemId = itemDom.attr("data-item-id");
+            itemDom.remove();
+            for(var i in items) {
+                if(items[i].itemId == itemId) {
+                    JZD.Tool.delAryByIdx(parseInt(i), items);
+                    break;
+                }
+            }
+            that.trigger("data.change.onlyRender");
+        },
+        // item图拖动排序
+        itemDragsort: function() {
+            var that = this;
+            $(".js-editorItems").dragsort({
+                placeHolderTemplate: "<li class='editor-item'></li>",
+                dragEnd: that.saveItemOrder
+            });
+        },
+        // 拖动排序结束后缩略图的排序
+        saveItemOrder: function() {
+            var itemOrder = $(".js-editorItem").map(function () {
+                return $(this).attr("data-item-id");
+            }).get();
+
+            $(".js-itemOrder").val(itemOrder.join("|"));
+            $(".js-itemOrder").change();
+        },
+        // 使用一个钩子监听条目顺序的变化，并触发重新渲染视图。
+        watchItemOrder: function() {
+            var that = this;
+            var data = this.data;
+            //  值的改变触发视图重新排序
+            $(".js-itemOrder").change(function() {
+                var itemOrder = this.value;
+                itemOrder = itemOrder.split("|");
+                // 重新排序data中的items
+                var items = data.items;
+                var tempItems = [];
+                for(i in itemOrder) {
+                    for(j in items) {
+                        if(items[j].itemId == itemOrder[i]) {
+                            tempItems.push(items[j]);
+                            break;
+                        }
+                    }
+                }
+                data.items = tempItems;
+                that.trigger("data.change", "items", tempItems);
+            });
+        }
+
+    }, JZD.Event);
+    // createClass函数执行完毕就生成了一个Editor类。
+    return JZD.createClass(constructor, methods);
+})();
+
+JZD.Page = (function () {
+    var constructor = function(cl){
+        this.cl = cl;
+        if(typeof this.init == 'function'){
+            this.init();
+        }
+    };
+    var configs = {
+        keys: [
+            "widgetName", "desc", "options"
+        ],
+        // todo
+        values: [
+            ["rich-text", "富文本", null],
+            ["media-list", "商品", {
+                type: "goods"
+            }],
+            ["media-list", "商品列表", {
+                type: "goodsList"
+            }],
+            ["media-showcase", "橱窗", {
+                type: "showcase"
+            }],
+            ["media-list", "图片广告", {
+                type: "ad"
+            }],
+            ["nav", "文本导航", {
+                type: "text"
+            }],
+            ["nav", "图片导航", {
+                type: "img"
+            }],
+            ["nav", "关联链接", {
+                type: "link"
+            }],
+            ["title", "标题", null],
+            ["store-bar", "进入店铺", null],
+            ["voice", "语音", null],
+            ["notice", "公告", null],
+
+            ["media-list", "商品分组1", {
+                type: "goodsGroup1"
+            }],
+            ["media-list", "商品分组2", {
+                type: "goodsGroup2"
+            }],
+            ["layout", "魔方", null],
+        ]
+
+    }
+
+    var methods = JZD.extend({
+        init: function() {
+            var that = this;
+            var len = configs.values.length;
+            var keys = configs.keys;
+            var values = configs.values;
+
+            // 加载js文件并生产添加widget的面板dom，
+            var jsTemplate = '<script src="../js/widgets/{widgetName}.js"><\/script>';
+            var fieldTemplate =
+                '<a class="js-new-field am-btn am-btn-secondary" ' +
+                'data-field-type="{widgetName}" data-widget-id="{widgetId}">{desc}</a>';
+            var loadJsSrc = "";
+            var addWidgetPanel = "";
+            this.widgets = [];
+            for(var i = 0; i < len; i++) {
+                var data = {};
+                var widgetConf = values[i];
+                for(var j in widgetConf) {
+                    data[keys[j]] = widgetConf[j];
+                }
+                data["widgetId"] = i;
+                this.widgets.push(data);
+
+                loadJsSrc += JZD.Html.template(jsTemplate, data);
+                addWidgetPanel += JZD.Html.template(fieldTemplate, data);
+            }
+            // 自动添加js文件到页面
+            //$("#js-widgets").html(loadJsSrc);
+
+            $("#add-widgets-panel").append(addWidgetPanel);
+            // 给添加widget面板dom绑定事件。
+            $("#add-widgets-panel .js-new-field").click(function() {
+                var widgetName = $(this).attr("data-field-type");
+                var widgetId = $(this).attr("data-widget-id");
+                that.addWidget(widgetName, widgetId);
+            });
+        },
+
+        addWidget : function(widgetName, widgetId){
+            // 创建dom并在相应的位置加入文档流。
+            var dom = $(document.createElement("div")).
+                addClass("control-group");
+            var options = null;
+            var widgets = this.widgets;
+            for(var i in widgets) {
+                if(widgets[i].widgetId == widgetId) {
+                    options = widgets[i].options;
+                    // 注意下面的"desc"  与widgets[i].desc的desc保持一致。
+                    options["desc"] = widgets[i].desc;
+                }
+            }
+            // js文件名与类名的关系是：aaa-bbb(文件名）：AaaBbb(类名）
+            var className = JZD.Tool.parseFileName(widgetName);
+            var widget = new JZD.Widget[className]($(dom), null, options);
+            var editor = new JZD.Editor[className]($('#editor-wrap'),
+                widget.getData(), widget.options);
+            // 绑定编辑器。
+            widget.bindEditor(editor);
+
+            $("#view-wrap").append(dom);
+            widget.render();
+
+            widget.cl.click(function (event) {
+                $("#view-wrap .control-group").removeClass("active");
+                $(this).addClass("active");
+                JZD.Tool.editorPosition(event);
+                editor.render();
+            });
+
+            //  绑定控制组操作按钮的事件。
+            widget.cl.find(".edit").click(function () {
+                editor.render();
+            });
+            widget.cl.find(".add").click(function (e) {
+                $("#editor-wrap").empty().append(
+                    $("#add-widgets-panel").children().clone(true));
+                e.stopPropagation();
+            });
+
+            widget.cl.find(".delete").click(function () {
+                widget.cl.remove();
+                $("#editor-wrap").empty();
+            });
+
+        },
+
+        render : function(){
+            // read this widgets config/data
+            // create widget, save to this prototype
+            // create widget container(<div id="widget_id" class="drag_able"></div>)
+            // render widget
+            // add action event(on_mouse_over, on_click, on_mouse_out)
+        },
+
+        actionEdit : function(widget_id) {
+            //var widgets = this.data.widgets;
+            //var classNames = this.d"p"ata.classNames;
+            //for(var i = 0; i < widgets.length; i++) {
+            //    widgets[i].cl.click(function () {
+            //        $("#view-wrap .control-group").removeClass("active");
+            //        $(this).addClass("active");
+            //        widgets[i].bindEditor(classNames[i]);
+            //    });
+            //    widgets[i].cl.find(".edit").click(function () {
+            //        // 绑定监听
+            //        widgets[i].bindEditor(classNames[i]);
+            //    });
+            //}
+        },
+
+        actionDel : function(widget_id){
+
+        },
+
+        actionAdd : function(type){
+            // type is null, render widgets editor
+            // type is not null, addWidget
+        },
+
+        actionSave : function(){
+
+        }
+
+    }, JZD.Event);
+    return JZD.createClass(constructor, methods, null);
+})();
+
+JZD.Tool = {
+    // 将格式A（aaa-bbb）解析成  格式B（AaaBbb）
+    parseFileName: function(fileName) {
+        return fileName.replace(/(?:^|-)([\w])/g,function (a, b) {
+            return b.toUpperCase();
+        });
+    },
+
+    editorPosition: function(event) {
+        // 获取鼠标的Y坐标值。
+        var top = event.pageY;
+        // 定位更合理的位置。
+        $("#editor-wrap").css("margin-top", top);
+    },
+    loadJs: function() {
+        // 使动态加载dom对框架的js效果生效。
+        $("#js-frame").html('<script src="http://cdn.amazeui.org/amazeui/2.3.0/js/amazeui.min.js"><\/script>');
+    },
+    rebuildTemplate: function(typeStr, template) {
+        var pattern = new RegExp("\\{\\s*" + typeStr + "[-_]html\\s*\\}", "i");
+        //console.log(pattern.source);
+        for(var i = 0; true; i++) {
+            if(pattern.test(template)) {
+                var matches = pattern.exec(template);
+                var mStr = matches[0];
+                // 将匹配字符串的'}'字符前加上当前迭代的次数来标注字符串 予以区分。
+                mStr = mStr.replace(/\}/, i + "}");
+                // 去掉空格。
+                mStr = mStr.replace(/\s+/, "");
+                // 将添加了标注的字符串替换原字符串的正则匹配处。
+                // 注：正则对象没有标志g，所以只替换第一个匹配。
+                template = template.replace(pattern, mStr);
+            } else {
+                break;
+            }
+        }
+        return template;
+    },
+    // 接受多个参数
+    concatJson: function() {
+        var jsons =  arguments;
+        var jsonStr = "";
+        for(var i = 0; i < jsons.length; i++) {
+            if(arguments[i] != undefined && arguments[i] != null &&
+                Object.keys(arguments[i]).length != 0) {
+                jsonStr += JSON.stringify(arguments[i]);
+            }
+        }
+
+        jsonStr = jsonStr.replace(/\}\s*\{/g, ",");
+        return jQuery.parseJSON(jsonStr);
+    },
+    // 深度克隆对象
+    depthClone: function(obj) {
+        return jQuery.parseJSON(JSON.stringify(obj));
+    },
+
+    // 数组操作
+    // =====================================
+    // 删除数组指定下标的元素
+    delAryByEle: function(ele, ary) {
+        var idx = jQuery.inArray(ele, ary);
+        return this.delAryByIdx(idx, ary);
+
+    },
+    delAryByIdx: function(idx, ary) {
+        if(idx < 0 || idx >= ary.length) {
+            alert("数组中没有需要删除的元素！")
+            return;
+        }
+        if(idx == ary.length-1) {
+            ary.pop();
+            return ary;
+        }
+        for(var i = idx; i < ary.length; i++) {
+            ary[i] = ary[i+1];
+        }
+        ary.pop();
+        return ary;
+    },
+    getArySubEle: function(ary, beginIdx, endIdx) {
+        var newAry = [];
+        for(var i = beginIdx; i < ary.length; i++) {
+            newAry.push(ary[i]);
+        }
+        return newAry;
+    },
+    invokePlugin: function(pluginName, options) {
+        if($("#js-plugin-" + pluginName).length <= 0) {
+            var wrapHtml = '<div id="js-plugin-' + pluginName + '"></div>';
+            $("#js-plugins").append(wrapHtml);
+        }
+        var pluginClass = JZD.Tool.parseFileName(pluginName);
+
+        var jsStr =
+            '<script src="../js/plugins/' + pluginName + '.js"><\/script>\n' +
+            '<script>\n' +
+            '    (function() {\n' +
+            '        var plugin = new JZP.Plugin["' + pluginClass + '"](' + JSON.stringify(options) + ');\n' +
+            '        plugin.run();\n' +
+            '    })();\n' +
+            '<\/script>\n';
+
+        $("#js-plugin-" + pluginName).html(jsStr);
+    }
+}
+JZD.Comm = {
+    itemState: function(that, items) {
+        var itemId = $(this).attr("data-item-id");
+        if($(this).attr("class").search("item-editoring") >=0) {
+            $(this).removeClass("item-editoring");
+            that.data.activeId = -1;
+        } else {
+            that.data.activeId = itemId;
+            // 样式标记当前编辑的item
+            items.removeClass("item-editoring");
+            $(this).addClass("item-editoring");
+        }
+    }
+}

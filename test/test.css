@@ -1,0 +1,77 @@
+.wrap51 .view-block, .popup-qr-block {
+    -webkit-transition: all .5s ease-in-out;
+    transition: all .5s ease-in-out;
+}
+
+.wrap51 .view-block {
+    position: fixed;
+    left: 50%;
+    z-index: 2010;
+    width: 1000px;
+    margin-left: -500px;
+    top: -700px;
+    text-align: center;
+}
+
+.wrap51 .view-block.show {
+    top: 50px;
+}
+
+.wrap51 .view-block .close, .popup-qr-block .close-qr {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2010;
+}
+
+.wrap51 .main {
+    position: relative;
+}
+
+.wrap51 .main img, .popup-qr-block img {
+    width: 100%;
+}
+
+.wrap51.popup-qr-block {
+    display: none;
+    width: 500px;
+    position: fixed;
+    left: 50%;
+    top: 100px;
+    margin-left: -250px;
+    z-index: 2100;
+    background-color: #fff;
+}
+
+.wrap51 #mask {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2000;
+    background-color: rgba(0, 0, 0, .5);
+}
+
+.wrap51 ul, li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.wrap51 .popop-btns {
+    overflow: hidden;
+    position: absolute;
+    left: 42%;
+    top: 240px;
+}
+
+.wrap51 .popop-btns a {
+    float: left;
+}
+
+.wrap51 .popop-btns img {
+    width: 147px;
+    margin: 0 12px;
+}

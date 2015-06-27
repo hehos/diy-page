@@ -1,0 +1,419 @@
+@import "compass";
+@import "../variables";
+
+
+/*
+  媒体列表组件
+  diy-page项目的实际使用的地方：
+    商品、商品列表、橱窗、图片广告、商品分组1、商品分组2
+*/
+
+// 组件变量
+$media-img-height:              140px !default;       // 媒体部分（一般指图片区域的高度）
+$media-price-color:             #ff661f !default;     // 媒体价格颜色
+$media-original-price-color:    #999 !default;        // 媒体原价颜色
+$media-desc-color:              #666 !default;        // 媒体详细部分颜色
+$media-promotion-color:         #ff495b !default;     // 促销类型的主题样式
+$media-item-space: 3%;
+
+.#{$ns}media-list {
+  // public
+  margin: 0;
+  p {
+    margin: 0;
+    line-height: (22 / 14); // 初始值为14px，换算结果 ==> 22px
+  }
+  padding: 5px;
+  box-sizing: border-box;
+
+  .#{$ns}media-item {
+    position: relative;
+    margin-bottom: 15px;
+    border: 1px solid $globalBorderColor;
+    background-color: #fff;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  // media-img
+  .#{$ns}media-img {
+    overflow: hidden;
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  // media-info
+  .#{$ns}media-info {
+    padding: 5px;
+    font-size: 1.6rem;
+    line-height: 1.5;
+  }
+  .#{$ns}media-title {
+    height: 1.5em;
+    @include ellipsis;
+  }
+  .#{$ns}media-desc {
+    height: 2.5em;
+    line-height: 1.3;
+    overflow: hidden;
+    margin-top: 4px;
+    font-size: 14px; // 初始值为14px，换算结果 ==> 12px
+    color: $media-desc-color;
+    // 下面代码可以让media-desc后面有media-price时抵消掉下外边距
+    margin-bottom: 30px;
+    & + .#{$ns}media-price {
+      margin-top: -28px;
+    }
+  }
+  .#{$ns}media-price {
+    font-weight: bold;
+    font-family: "microsoft yahei";
+    color: $media-price-color;
+  }
+  .#{$ns}media-original-price {
+    color: $media-original-price-color;
+    text-decoration: line-through;
+    font-size: 85%;
+    line-height: 1em;
+  }
+  .#{$ns}media-promotio-badge {
+    display: none;
+    float: right;
+  }
+
+  // media-btns
+  .#{$ns}media-btns {
+    [class*=icons-buy-btn] {
+      position: absolute;
+      bottom: 10px; right: 3px;
+    }
+    .icons-buy-btn4 {
+      right: -6px;
+    }
+    .jz-heart-btn {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 30px;
+      height: 30px; line-height: 22px;
+      text-align: center;
+      padding: 5px;
+      cursor: pointer;
+
+      box-shadow: 0 0 3px #333;
+      border-radius: 50%;
+      color: $gray-light;
+      font-size: 20px;
+      background-color: #fff;
+    }
+  }
+}
+
+/*
+ 卡片模式
+  media-big （大图）
+  media-small （小图）
+  media-size-alternately （一大两小的大小交替出现）
+  media-rowlist （行列表显示）
+  */
+
+.#{$ns}media-big {
+  .#{$ns}media-item {
+    padding: 5px;
+  }
+  .#{$ns}media-img {
+    height: auto;
+  }
+  .#{$ns}media-title {
+    font-weight: bold;
+  }
+  .#{$ns}media-desc {
+    height: 1.5em;
+    @include ellipsis;
+  }
+}
+
+.#{$ns}media-small, .#{$ns}media-size-alternately , .#{$ns}media-rowlist {
+  .#{$ns}media-img {
+    height: $media-img-height;
+  }
+}
+
+.#{$ns}media-small, .#{$ns}media-size-alternately {
+  margin-left: -$media-item-space;
+  @include pie-clearfix;
+  .#{$ns}media-item {
+    float: left;
+    width: 50% - $media-item-space;
+    margin-left: $media-item-space;
+    padding: 1px;
+  }
+}
+
+.#{$ns}media-size-alternately {
+  .#{$ns}media-item-big {
+    width: 100% - $media-item-space;
+    padding: 5px;
+    .#{$ns}media-img {
+      height: $media-img-height * 2;
+    }
+    .#{$ns}media-desc {
+      height: 1.5em;
+      @include ellipsis;
+    }
+  }
+}
+
+.#{$ns}media-rowlist {
+  .jz-media-title { margin-bottom: .6em; }
+  .#{$ns}media-item {
+    padding: .3em;
+    &, & > a {
+      @include pie-clearfix; // 考虑在非移动端的html结构上的差异
+    }
+  }
+  .#{$ns}media-img {
+    float: left;
+    width: 40%;
+  }
+  .#{$ns}media-info {
+    overflow: hidden;
+    padding-left: 10px;
+  }
+}
+
+
+/*
+  极简模式和广告模式  公共样式
+*/
+.#{$ns}media-simple, .#{$ns}media-imgs {
+  .#{$ns}media-item {
+    border-color: transparent;
+  }
+  &.#{$ns}media-big,
+  &.#{$ns}media-small,
+  &.#{$ns}media-size-alternately,
+  &.#{$ns}media-waterfall {
+    .#{$ns}media-item {
+      padding: 0;
+      // media-info 隐藏方式：使用用height：0实现
+      .#{$ns}media-info {
+        height: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+      .#{$ns}media-btns { display: none; }
+    }
+  }
+}
+
+
+/*
+  极简模式
+  media-big （大图）
+  media-small （小图）
+  media-size-alternately （一大两小的大小交替出现）
+  media-rowlist （行列表显示）
+  */
+.#{$ns}media-simple {
+  &.#{$ns}media-big,
+  &.#{$ns}media-small,
+  &.#{$ns}media-size-alternately,
+  &.#{$ns}media-waterfall {
+    // 极简模式只是 media-price （价格）显示，其他都隐藏。
+    .#{$ns}media-price {
+      display: inline-block;
+      position: absolute;
+      bottom: 3px; right: 3px;
+      padding: 0 3px;
+      font-weight: normal;
+      color: #fff;
+      @include border-radius(3px);
+      background: rgba(0, 0, 0, 0.5);
+    }
+  }
+  &.#{$ns}media-rowlist {
+
+    .#{$ns}media-item {
+      padding-bottom: 10px;
+      border-bottom-color: $globalBorderColor;
+    }
+  }
+}
+
+
+/*
+  图册或者广告模式
+  media-big （大图）
+  media-small （小图）
+  media-size-alternately （一大两小的大小交替出现）
+*/
+.#{$ns}media-imgs {
+  .#{$ns}media-item {
+    border-color: transparent;
+  }
+  &.#{$ns}media-big,
+  &.#{$ns}media-small,
+  &.#{$ns}media-size-alternately,
+  &.#{$ns}media-waterfall {
+    .#{$ns}media-info { padding: 0; }
+    // 极简模式只是 media-title （标题）显示，其他都隐藏。
+    .#{$ns}media-title {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      padding: 5px 10px;
+      box-sizing: content-box;
+
+      font-weight: normal;
+      background-color: rgba(0, 0, 0, .5);
+      color: #fff;
+    }
+  }
+}
+
+
+/*
+  media-promotion （促销）
+  media-waterfall （瀑布）
+*/
+.#{$ns}media-promotion {
+  .#{$ns}media-info > *, .#{$ns}media-btns { display: none; }
+  .#{$ns}media-info {
+    position: relative;
+    height: 46px;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    .#{$ns}media-price, .#{$ns}media-original-price {
+      display: block;
+      margin-top: 0;
+    }
+    .#{$ns}media-price { color: $media-promotion-color; }
+  }
+  .#{$ns}media-promotio-badge {
+    position: absolute; right: 0; top: 0;
+    display: inline-block;
+    width: 3em;
+    height: 100%;
+    padding: 6px .5em;
+    line-height: (46 - 12) /2 + px;
+    color: #fff;
+    background-color: $media-promotion-color;
+  }
+}
+
+.#{$ns}media-waterfall {
+  margin-left: -$media-item-space;
+  @include pie-clearfix;
+  .jz-waterfall-list {
+    float: left;
+    width: 50% - $media-item-space;
+    box-sizing: border-box;
+    margin-left: $media-item-space;
+    @include pie-clearfix;
+    .#{$ns}media-item {
+      visibility: hidden;
+      width: 100%;
+      margin: 10px 0;
+    }
+  }
+  .#{$ns}media-img {
+    height: auto;
+  }
+}
+
+// 控制列数
+.jz-media-col3 {
+  .jz-waterfall-list, .jz-media-item {
+    width: (1/3)*100% - $media-item-space;
+  }
+}
+.jz-media-col4 {
+  .jz-waterfall-list, .jz-media-item {
+    width: (1/4)*100% - $media-item-space;
+  }
+}
+.jz-media-col5 {
+  .jz-waterfall-list, .jz-media-item {
+    width: (1/5)*100% - $media-item-space;
+  }
+}
+
+// =======================
+/*
+  下面为媒体类型的扩展
+*/
+// 分组
+.jz-media-group1, .jz-media-group2 {
+  box-sizing: content-box;
+  .jz-media-nav {
+    border: 1px solid #ddd;
+    border-width: 1px 0;
+  }
+  .jz-media-nav-item {
+    text-align: center;
+    padding-left: 8px;
+    padding-right: 8px;
+    a { display: block; }
+    &.active, &:hover {
+      a { color: #ed5050; }
+    }
+  }
+}
+
+.jz-media-group1 {
+  .jz-media-nav {
+    display: flex;
+    //    flex-direction: row;
+    //    flex-wrap: wrap;
+    flex-flow: row nowrap; // 上面两行的缩写
+  }
+  .jz-media-nav-item {
+//    flex-grow: 1;
+//    flex-shrink: 1;
+//    flex-basis: auto;
+    flex: 1 1 80px; // 上面三行的缩写。
+    line-height: 42px;
+    &.active, &:hover {
+      position: relative;
+      top: 1px;
+      border-bottom: 1px solid #ed5050;
+    }
+  }
+  // 不支持display: flex；的布局的兼容代码
+//  .jz-media-nav {  @include pie-clearfix; }
+//  .jz-media-nav-item {  float: left; }
+}
+
+.jz-media-group2 {
+  // 支持display: flex;的布局
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: stretch;
+  .jz-media-nav-box {
+    width: 30%;
+    max-width: 200px;
+    flex-grow: 1;
+  }
+  .jz-media-body {
+    width: 70%;
+    flex-grow: 2;
+  }
+
+  .jz-media-nav-box {
+    padding: 30px 0;
+    background-color: #e6e6e6;
+  }
+  .jz-media-nav-item {
+    line-height: 35px;
+    &.active, &:hover {
+      background-color: $globalBgColor;
+    }
+  }
+
+   // 不支持display: flex；的布局的兼容代码
+//  & { @include pie-clearfix; }
+//  .jz-media-nav-box, .jz-media-body {float: left;}
+}

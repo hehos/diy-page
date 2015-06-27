@@ -1,0 +1,25 @@
+@import "compass";
+@import "../variables";
+
+// 店铺条
+// ============================
+
+
+.jz-store-bar {
+  line-height: 50px;
+  padding: 0 $global-spacing;
+  .right-txt {
+    width: 6em;
+    text-align: right;
+  }
+  .left-txt {
+    margin-right: 6.5em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  [class*=icon] {
+    font-size: 20px;
+    vertical-align: top;
+  }
+}

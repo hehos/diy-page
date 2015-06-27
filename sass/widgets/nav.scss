@@ -1,0 +1,104 @@
+@import "compass";
+@import "../variables";
+
+/*
+  导航组件
+  diy-page项目的实际使用的地方：
+    文本导航、图片导航、关联链接
+*/
+
+// 组件变量
+$nav-item-padding:  12px !default;
+$item-icon-fontsize:     24px !default;
+
+
+.#{$ns}nav {
+  display: block;
+  background-color: #fff;
+  li {
+    position: relative;
+    padding: $nav-item-padding;
+    & > a {
+      display: block;
+      @include pie-clearfix;
+    }
+  }
+  .#{$ns}item-icon {
+    float: left;
+    img {
+      vertical-align: top;
+      height: 100%;
+    }
+  }
+  .#{$ns}item-txt {
+    overflow: hidden;
+    font-size: 1.6rem;
+  }
+  .#{$ns}right-icon {
+    float: right;
+  }
+  .#{$ns}item-explain {
+    display: none;
+    margin: 0;
+    font-size: 1.4rem;
+    color: $gray;
+  }
+}
+.#{$ns}nav-icon1 {
+  padding: $nav-item-padding 0;
+  @include pie-clearfix;
+  li {
+    float: left;
+    width: 25%;
+    padding: $nav-item-padding - 4px;
+    text-align: center;
+  }
+  .#{$ns}item-icon {
+    float: none;
+    height: $item-icon-fontsize * 2;
+    margin-bottom: 6px;
+    img { max-width: $item-icon-fontsize * 2; }
+  }
+  .#{$ns}right-icon { display: none }
+  .#{$ns}item-txt {
+    line-height: 1;
+  }
+}
+
+.#{$ns}nav-icon2, .#{$ns}nav-icon3 {
+  li { border-bottom: 1px solid $globalBorderColor; }
+  .#{$ns}item-icon {
+    img, i { margin-right: 15px; }
+  }
+  .#{$ns}item-icon, .#{$ns}right-icon {
+    i {
+      font-size: $item-icon-fontsize;
+      vertical-align: baseline;
+    }
+  }
+}
+.#{$ns}nav-icon2 {
+  li { padding: 8px $nav-item-padding; }
+  .#{$ns}item-icon, .#{$ns}item-txt {
+    line-height: $item-icon-fontsize;
+    height: 34px;
+    padding: ((34 - $item-icon-fontsize) / 2) 0; 
+  }
+  .#{$ns}item-icon img { max-width: $item-icon-fontsize; }
+}
+.#{$ns}nav-icon3 {
+  .#{$ns}item-icon {
+    height: 50px;
+    img {  max-width: 50px; }
+  }
+  .#{$ns}right-icon { margin-top: 10px; }
+
+  .#{$ns}item-explain {
+    display: block;
+  }
+}
+
+// amazeui框架的导航组件
+.am-menu-default, .am-menu-stack {
+  & > .am-collapse { display: block; }
+}

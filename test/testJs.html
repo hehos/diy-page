@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <!--&lt;!&ndash;  框架样式  &ndash;&gt;-->
+    <!--<link rel="stylesheet" type="text/css" href="../../vendor/amazeui/dist/css/amazeui.min.css"/>-->
+    <!--&lt;!&ndash;  公共  &ndash;&gt;-->
+    <!--<link rel="stylesheet" type="text/css" href="../../css/comm.css"/>-->
+    <!--&lt;!&ndash;  全局样式  &ndash;&gt;-->
+    <!--<link rel="stylesheet" type="text/css" href="../../css/global.css"/>-->
+
+    <!-- 避免在文件路径不一样的情况 include 加载不了样式 -->
+    <!--  框架样式  -->
+    <link rel="stylesheet" type="text/css" href="../vendor/amazeui/dist/css/amazeui.min.css" />
+    <!--  公共  -->
+    <link rel="stylesheet" type="text/css" href="../css/comm.css" />
+    <!--  全局样式  -->
+    <link rel="stylesheet" type="text/css" href="../css/global.css" />
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js" type="text/javascript" charset="utf-8"></script>
+    <title></title>
+</head>
+<body>
+
+
+<div class="am-form-group js-radioGroup0"><label class="am-radio-inline"> <input data-attr-name="widgetClassName"
+                                                                                 type="radio" value="jz-nav-icon1"
+                                                                                 name="radioGroup0" checked="checked">大图标
+</label> <label class="am-radio-inline"> <input data-attr-name="widgetClassName" type="radio" value="jz-nav-icon2"
+                                                name="radioGroup0">竖排列表 </label> <label class="am-radio-inline"> <input
+        data-attr-name="widgetClassName" type="radio" value="jz-nav-icon3" name="radioGroup0">简单介绍信息 </label></div>
+</body>
+
+<script>
+    $(".js-radioGroup0 [type=radio]").click(function() {
+        var value = $(".js-radioGroup0 [type=radio]").eq(1)[0].checked;
+        alert(value);
+    });
+
+</script>
+</html>

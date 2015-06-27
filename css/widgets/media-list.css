@@ -1,0 +1,488 @@
+@charset "UTF-8";
+/*
+  媒体列表组件
+  diy-page项目的实际使用的地方：
+    商品、商品列表、橱窗、图片广告、商品分组1、商品分组2
+*/
+/* line 19, ../../sass/widgets/media-list.scss */
+.jz-media-list {
+  margin: 0;
+  padding: 5px;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+/* line 22, ../../sass/widgets/media-list.scss */
+.jz-media-list p {
+  margin: 0;
+  line-height: 1.57143;
+}
+/* line 29, ../../sass/widgets/media-list.scss */
+.jz-media-list .jz-media-item {
+  position: relative;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+}
+/* line 34, ../../sass/widgets/media-list.scss */
+.jz-media-list .jz-media-item:last-child {
+  margin-bottom: 0;
+}
+/* line 39, ../../sass/widgets/media-list.scss */
+.jz-media-list .jz-media-img {
+  overflow: hidden;
+}
+/* line 41, ../../sass/widgets/media-list.scss */
+.jz-media-list .jz-media-img img {
+  width: 100%;
+  height: auto;
+}
+/* line 48, ../../sass/widgets/media-list.scss */
+.jz-media-list .jz-media-info {
+  padding: 5px;
+  font-size: 1.6rem;
+  line-height: 1.5;
+}
+/* line 53, ../../sass/widgets/media-list.scss */
+.jz-media-list .jz-media-title {
+  height: 1.5em;
+  white-space: nowrap;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+/* line 57, ../../sass/widgets/media-list.scss */
+.jz-media-list .jz-media-desc {
+  height: 2.5em;
+  line-height: 1.3;
+  overflow: hidden;
+  margin-top: 4px;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 30px;
+}
+/* line 66, ../../sass/widgets/media-list.scss */
+.jz-media-list .jz-media-desc + .jz-media-price {
+  margin-top: -28px;
+}
+/* line 70, ../../sass/widgets/media-list.scss */
+.jz-media-list .jz-media-price {
+  font-weight: bold;
+  font-family: "microsoft yahei";
+  color: #ff661f;
+}
+/* line 75, ../../sass/widgets/media-list.scss */
+.jz-media-list .jz-media-original-price {
+  color: #999;
+  text-decoration: line-through;
+  font-size: 85%;
+  line-height: 1em;
+}
+/* line 81, ../../sass/widgets/media-list.scss */
+.jz-media-list .jz-media-promotio-badge {
+  display: none;
+  float: right;
+}
+/* line 88, ../../sass/widgets/media-list.scss */
+.jz-media-list .jz-media-btns [class*=icons-buy-btn] {
+  position: absolute;
+  bottom: 10px;
+  right: 3px;
+}
+/* line 92, ../../sass/widgets/media-list.scss */
+.jz-media-list .jz-media-btns .icons-buy-btn4 {
+  right: -6px;
+}
+/* line 95, ../../sass/widgets/media-list.scss */
+.jz-media-list .jz-media-btns .jz-heart-btn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 30px;
+  height: 30px;
+  line-height: 22px;
+  text-align: center;
+  padding: 5px;
+  cursor: pointer;
+  -webkit-box-shadow: 0 0 3px #333;
+          box-shadow: 0 0 3px #333;
+  border-radius: 50%;
+  color: #999999;
+  font-size: 20px;
+  background-color: #fff;
+}
+
+/*
+ 卡片模式
+  media-big （大图）
+  media-small （小图）
+  media-size-alternately （一大两小的大小交替出现）
+  media-rowlist （行列表显示）
+  */
+/* line 123, ../../sass/widgets/media-list.scss */
+.jz-media-big .jz-media-item {
+  padding: 5px;
+}
+/* line 126, ../../sass/widgets/media-list.scss */
+.jz-media-big .jz-media-img {
+  height: auto;
+}
+/* line 129, ../../sass/widgets/media-list.scss */
+.jz-media-big .jz-media-title {
+  font-weight: bold;
+}
+/* line 132, ../../sass/widgets/media-list.scss */
+.jz-media-big .jz-media-desc {
+  height: 1.5em;
+  white-space: nowrap;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+
+/* line 139, ../../sass/widgets/media-list.scss */
+.jz-media-small .jz-media-img, .jz-media-size-alternately .jz-media-img, .jz-media-rowlist .jz-media-img {
+  height: 140px;
+}
+
+/* line 144, ../../sass/widgets/media-list.scss */
+.jz-media-small, .jz-media-size-alternately {
+  margin-left: -3%;
+  *zoom: 1;
+}
+/* line 38, ../../../../../../usr/local/ruby-2.1.4/lib/ruby/gems/2.1.0/gems/compass-core-1.0.1/stylesheets/compass/utilities/general/_clearfix.scss */
+.jz-media-small:after, .jz-media-size-alternately:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+/* line 147, ../../sass/widgets/media-list.scss */
+.jz-media-small .jz-media-item, .jz-media-size-alternately .jz-media-item {
+  float: left;
+  width: 47%;
+  margin-left: 3%;
+  padding: 1px;
+}
+
+/* line 156, ../../sass/widgets/media-list.scss */
+.jz-media-size-alternately .jz-media-item-big {
+  width: 97%;
+  padding: 5px;
+}
+/* line 159, ../../sass/widgets/media-list.scss */
+.jz-media-size-alternately .jz-media-item-big .jz-media-img {
+  height: 280px;
+}
+/* line 162, ../../sass/widgets/media-list.scss */
+.jz-media-size-alternately .jz-media-item-big .jz-media-desc {
+  height: 1.5em;
+  white-space: nowrap;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+
+/* line 170, ../../sass/widgets/media-list.scss */
+.jz-media-rowlist .jz-media-title {
+  margin-bottom: .6em;
+}
+/* line 171, ../../sass/widgets/media-list.scss */
+.jz-media-rowlist .jz-media-item {
+  padding: .3em;
+}
+/* line 173, ../../sass/widgets/media-list.scss */
+.jz-media-rowlist .jz-media-item, .jz-media-rowlist .jz-media-item > a {
+  *zoom: 1;
+}
+/* line 38, ../../../../../../usr/local/ruby-2.1.4/lib/ruby/gems/2.1.0/gems/compass-core-1.0.1/stylesheets/compass/utilities/general/_clearfix.scss */
+.jz-media-rowlist .jz-media-item:after, .jz-media-rowlist .jz-media-item > a:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+/* line 177, ../../sass/widgets/media-list.scss */
+.jz-media-rowlist .jz-media-img {
+  float: left;
+  width: 40%;
+}
+/* line 181, ../../sass/widgets/media-list.scss */
+.jz-media-rowlist .jz-media-info {
+  overflow: hidden;
+  padding-left: 10px;
+}
+
+/*
+  极简模式和广告模式  公共样式
+*/
+/* line 192, ../../sass/widgets/media-list.scss */
+.jz-media-simple .jz-media-item, .jz-media-imgs .jz-media-item {
+  border-color: transparent;
+}
+/* line 199, ../../sass/widgets/media-list.scss */
+.jz-media-simple.jz-media-big .jz-media-item, .jz-media-simple.jz-media-small .jz-media-item, .jz-media-simple.jz-media-size-alternately .jz-media-item, .jz-media-simple.jz-media-waterfall .jz-media-item, .jz-media-imgs.jz-media-big .jz-media-item, .jz-media-imgs.jz-media-small .jz-media-item, .jz-media-imgs.jz-media-size-alternately .jz-media-item, .jz-media-imgs.jz-media-waterfall .jz-media-item {
+  padding: 0;
+}
+/* line 202, ../../sass/widgets/media-list.scss */
+.jz-media-simple.jz-media-big .jz-media-item .jz-media-info, .jz-media-simple.jz-media-small .jz-media-item .jz-media-info, .jz-media-simple.jz-media-size-alternately .jz-media-item .jz-media-info, .jz-media-simple.jz-media-waterfall .jz-media-item .jz-media-info, .jz-media-imgs.jz-media-big .jz-media-item .jz-media-info, .jz-media-imgs.jz-media-small .jz-media-item .jz-media-info, .jz-media-imgs.jz-media-size-alternately .jz-media-item .jz-media-info, .jz-media-imgs.jz-media-waterfall .jz-media-item .jz-media-info {
+  height: 0;
+  padding: 0;
+  overflow: hidden;
+}
+/* line 207, ../../sass/widgets/media-list.scss */
+.jz-media-simple.jz-media-big .jz-media-item .jz-media-btns, .jz-media-simple.jz-media-small .jz-media-item .jz-media-btns, .jz-media-simple.jz-media-size-alternately .jz-media-item .jz-media-btns, .jz-media-simple.jz-media-waterfall .jz-media-item .jz-media-btns, .jz-media-imgs.jz-media-big .jz-media-item .jz-media-btns, .jz-media-imgs.jz-media-small .jz-media-item .jz-media-btns, .jz-media-imgs.jz-media-size-alternately .jz-media-item .jz-media-btns, .jz-media-imgs.jz-media-waterfall .jz-media-item .jz-media-btns {
+  display: none;
+}
+
+/*
+  极简模式
+  media-big （大图）
+  media-small （小图）
+  media-size-alternately （一大两小的大小交替出现）
+  media-rowlist （行列表显示）
+  */
+/* line 226, ../../sass/widgets/media-list.scss */
+.jz-media-simple.jz-media-big .jz-media-price, .jz-media-simple.jz-media-small .jz-media-price, .jz-media-simple.jz-media-size-alternately .jz-media-price, .jz-media-simple.jz-media-waterfall .jz-media-price {
+  display: inline-block;
+  position: absolute;
+  bottom: 3px;
+  right: 3px;
+  padding: 0 3px;
+  font-weight: normal;
+  color: #fff;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.5);
+}
+/* line 239, ../../sass/widgets/media-list.scss */
+.jz-media-simple.jz-media-rowlist .jz-media-item {
+  padding-bottom: 10px;
+  border-bottom-color: #ddd;
+}
+
+/*
+  图册或者广告模式
+  media-big （大图）
+  media-small （小图）
+  media-size-alternately （一大两小的大小交替出现）
+*/
+/* line 254, ../../sass/widgets/media-list.scss */
+.jz-media-imgs .jz-media-item {
+  border-color: transparent;
+}
+/* line 261, ../../sass/widgets/media-list.scss */
+.jz-media-imgs.jz-media-big .jz-media-info, .jz-media-imgs.jz-media-small .jz-media-info, .jz-media-imgs.jz-media-size-alternately .jz-media-info, .jz-media-imgs.jz-media-waterfall .jz-media-info {
+  padding: 0;
+}
+/* line 263, ../../sass/widgets/media-list.scss */
+.jz-media-imgs.jz-media-big .jz-media-title, .jz-media-imgs.jz-media-small .jz-media-title, .jz-media-imgs.jz-media-size-alternately .jz-media-title, .jz-media-imgs.jz-media-waterfall .jz-media-title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 5px 10px;
+  -webkit-box-sizing: content-box;
+     -moz-box-sizing: content-box;
+          box-sizing: content-box;
+  font-weight: normal;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+}
+
+/*
+  media-promotion （促销）
+  media-waterfall （瀑布）
+*/
+/* line 282, ../../sass/widgets/media-list.scss */
+.jz-media-promotion .jz-media-info > *, .jz-media-promotion .jz-media-btns {
+  display: none;
+}
+/* line 283, ../../sass/widgets/media-list.scss */
+.jz-media-promotion .jz-media-info {
+  position: relative;
+  height: 46px;
+  padding-top: 0;
+  padding-right: 0;
+  padding-bottom: 0;
+}
+/* line 289, ../../sass/widgets/media-list.scss */
+.jz-media-promotion .jz-media-info .jz-media-price, .jz-media-promotion .jz-media-info .jz-media-original-price {
+  display: block;
+  margin-top: 0;
+}
+/* line 293, ../../sass/widgets/media-list.scss */
+.jz-media-promotion .jz-media-info .jz-media-price {
+  color: #ff495b;
+}
+/* line 295, ../../sass/widgets/media-list.scss */
+.jz-media-promotion .jz-media-promotio-badge {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: inline-block;
+  width: 3em;
+  height: 100%;
+  padding: 6px .5em;
+  line-height: 17px;
+  color: #fff;
+  background-color: #ff495b;
+}
+
+/* line 307, ../../sass/widgets/media-list.scss */
+.jz-media-waterfall {
+  margin-left: -3%;
+  *zoom: 1;
+}
+/* line 38, ../../../../../../usr/local/ruby-2.1.4/lib/ruby/gems/2.1.0/gems/compass-core-1.0.1/stylesheets/compass/utilities/general/_clearfix.scss */
+.jz-media-waterfall:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+/* line 310, ../../sass/widgets/media-list.scss */
+.jz-media-waterfall .jz-waterfall-list {
+  float: left;
+  width: 47%;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  margin-left: 3%;
+  *zoom: 1;
+}
+/* line 38, ../../../../../../usr/local/ruby-2.1.4/lib/ruby/gems/2.1.0/gems/compass-core-1.0.1/stylesheets/compass/utilities/general/_clearfix.scss */
+.jz-media-waterfall .jz-waterfall-list:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+/* line 316, ../../sass/widgets/media-list.scss */
+.jz-media-waterfall .jz-waterfall-list .jz-media-item {
+  visibility: hidden;
+  width: 100%;
+  margin: 10px 0;
+}
+/* line 322, ../../sass/widgets/media-list.scss */
+.jz-media-waterfall .jz-media-img {
+  height: auto;
+}
+
+/* line 329, ../../sass/widgets/media-list.scss */
+.jz-media-col3 .jz-waterfall-list, .jz-media-col3 .jz-media-item {
+  width: 30.33333%;
+}
+
+/* line 334, ../../sass/widgets/media-list.scss */
+.jz-media-col4 .jz-waterfall-list, .jz-media-col4 .jz-media-item {
+  width: 22%;
+}
+
+/* line 339, ../../sass/widgets/media-list.scss */
+.jz-media-col5 .jz-waterfall-list, .jz-media-col5 .jz-media-item {
+  width: 17%;
+}
+
+/*
+  下面为媒体类型的扩展
+*/
+/* line 349, ../../sass/widgets/media-list.scss */
+.jz-media-group1, .jz-media-group2 {
+  -webkit-box-sizing: content-box;
+     -moz-box-sizing: content-box;
+          box-sizing: content-box;
+}
+/* line 351, ../../sass/widgets/media-list.scss */
+.jz-media-group1 .jz-media-nav, .jz-media-group2 .jz-media-nav {
+  border: 1px solid #ddd;
+  border-width: 1px 0;
+}
+/* line 355, ../../sass/widgets/media-list.scss */
+.jz-media-group1 .jz-media-nav-item, .jz-media-group2 .jz-media-nav-item {
+  text-align: center;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+/* line 359, ../../sass/widgets/media-list.scss */
+.jz-media-group1 .jz-media-nav-item a, .jz-media-group2 .jz-media-nav-item a {
+  display: block;
+}
+/* line 361, ../../sass/widgets/media-list.scss */
+.jz-media-group1 .jz-media-nav-item.active a, .jz-media-group1 .jz-media-nav-item:hover a, .jz-media-group2 .jz-media-nav-item.active a, .jz-media-group2 .jz-media-nav-item:hover a {
+  color: #ed5050;
+}
+
+/* line 367, ../../sass/widgets/media-list.scss */
+.jz-media-group1 .jz-media-nav {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: row nowrap;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+}
+/* line 373, ../../sass/widgets/media-list.scss */
+.jz-media-group1 .jz-media-nav-item {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 1 80px;
+     -moz-box-flex: 1;
+      -ms-flex: 1 1 80px;
+          flex: 1 1 80px;
+  line-height: 42px;
+}
+/* line 379, ../../sass/widgets/media-list.scss */
+.jz-media-group1 .jz-media-nav-item.active, .jz-media-group1 .jz-media-nav-item:hover {
+  position: relative;
+  top: 1px;
+  border-bottom: 1px solid #ed5050;
+}
+
+/* line 390, ../../sass/widgets/media-list.scss */
+.jz-media-group2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: row nowrap;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+  -webkit-box-align: stretch;
+  -webkit-align-items: stretch;
+     -moz-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+}
+/* line 395, ../../sass/widgets/media-list.scss */
+.jz-media-group2 .jz-media-nav-box {
+  width: 30%;
+  max-width: 200px;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+     -moz-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+/* line 400, ../../sass/widgets/media-list.scss */
+.jz-media-group2 .jz-media-body {
+  width: 70%;
+  -webkit-box-flex: 2;
+  -webkit-flex-grow: 2;
+     -moz-box-flex: 2;
+      -ms-flex-positive: 2;
+          flex-grow: 2;
+}
+/* line 405, ../../sass/widgets/media-list.scss */
+.jz-media-group2 .jz-media-nav-box {
+  padding: 30px 0;
+  background-color: #e6e6e6;
+}
+/* line 409, ../../sass/widgets/media-list.scss */
+.jz-media-group2 .jz-media-nav-item {
+  line-height: 35px;
+}
+/* line 411, ../../sass/widgets/media-list.scss */
+.jz-media-group2 .jz-media-nav-item.active, .jz-media-group2 .jz-media-nav-item:hover {
+  background-color: #f8f8f8;
+}

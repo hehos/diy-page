@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<style>
+    .active {
+        border: 1px solid #ddd;
+    }
+</style>
+<ul>
+    <li class="item1">item1</li>
+    <li>item2</li>
+    <li>item3</li>
+</ul>
+
+<script>
+    jQuery.extend({
+        Meg: function (message) {
+            alert(message);
+        },
+        MegToo: function (messageToo) {
+            alert(messageToo);
+        },
+        toggleClick: function(fn1, fn2) {
+//            this.toggleClickFn = 0;
+//            this.toggleClickFnLength = arguments.length;
+//            for(i in arguments) {
+//                if(i == this.toggleClickFn) {
+//                    arguments[i]();
+//                    this.toggleClickFn++;
+//                    break;
+//                }
+//            }
+            fn1();
+        }
+    });
+//    $.toggleClick();
+//    $(".item1").toggleClick(
+//        function() {
+//            alert(88);
+//        }
+//    );
+
+</script>
+</body>
+</html>

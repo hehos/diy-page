@@ -1,0 +1,717 @@
+/**
+ * Created by hui on 2015/5/7.
+ *
+ * 媒体
+ */
+
+
+
+
+JZD.Widget.MediaList = (function() {
+    var statics = {
+        info: {
+            name: "媒体列表",
+            type: 'media-list',
+            plugins: [
+                "media-waterfall"
+            ]
+        }
+    };
+
+    var configs = {
+        template: {
+            wrap:
+                '<ul class="jz-media-list {widgetClassName}">' +
+                '   {itemsHtml}' +
+                '</ul>',
+            item:
+                '    <li data-item-id="{itemId}" class="jz-media-item {itemBigClassName}">' +
+                '        <a class="a-block" href="{url}">' +
+                '            <div class="jz-media-img">' +
+                '                <img src="../img/temp/{imgName}" alt=""/>' +
+                '            </div>' +
+                '            {infoWrapTemplate}' +
+                '        </a>' +
+                '        {btnWrapTemplate}' +
+                '    </li>',
+            // media-info
+            mediaInfoWrap:
+                '            <div class="jz-media-info">' +
+                '                {mediaInfoTemplate}' +
+                '            </div>',
+            title: '<p class="jz-media-title">{title}</p>',
+            desc: '<p class="jz-media-desc">{desc}</p>',
+            price: '<p class="jz-media-price">{price}</p>',
+            promotioBadge: '<p class="jz-media-promotio-badge">{promotioBadge}</p>',
+            // media-btns
+            btnsWrap:
+                '        <div class="jz-media-btns">' +
+                '            {mediaBtnsTemplate}' +
+                '        </div>',
+            buyBtn: '<a href="" class="{buyBtn}"></a>',
+            heartbtn: '<span class="jz-heart-btn"><i class="am-icon-heart"></i></span>'
+
+        },
+        data: {
+            widgetClassName: "jz-media-small",
+            // 一大两小的大小交替出现类型的 大图条目的className
+            itemBigClassName: "jz-media-item-big",
+
+            // media-info
+            isTitle: false,
+            isDesc: false, //  是否有产品描述
+            isPrice: false,
+            promotioBadge: "我要抢购",
+
+            // media-btns
+            isBuyBtn: true,
+            buyBtn: "icons-buy-btn1",
+            isHeartBtn: true,
+
+            // 瀑布流插件的数据
+            pluginData: {
+                domSelector:		".jz-media-waterfall",
+                cols: 				2,
+                loadWay:			"default",
+                animation:			"default",
+                initNum:			15,
+                batchNum:			3
+            },
+
+            // 处于活动的itemID
+            activeId: 0,
+            itemDataTemplate: {
+                cateId: 0,
+                itemId: 0,
+                imgName: ".jpg",
+                url: "javascript:void(0);",
+                title: "此处是媒体的名称",
+                desc: "此处是媒体的描述信息",
+                price: 888.88
+            },
+            // 调用接口返回的数据
+            items: [],
+            defaultItems: [
+                {
+                    cateId: 0,
+                    itemId: 0,
+                    imgName: "1.jpg",
+                    url: "javascript:void(0);",
+                    title: "此处是媒体的名称1",
+                    desc: "此处是媒体的描述信息1",
+                    price: 888.88
+                },
+                {
+                    cateId: 0,
+                    itemId: 1,
+                    imgName: "1.jpg",
+                    url: "javascript:void(0);",
+                    title: "此处是媒体的名称1",
+                    desc: "此处是媒体的描述信息1",
+                    price: 888.88
+                },
+                {
+                    cateId: 0,
+                    itemId: 2,
+                    imgName: "22.png",
+                    url: "javascript:void(0);",
+                    title: "此处是媒体的名称2",
+                    desc: "此处是媒体的描述信息2",
+                    price: 888.88
+                },
+                {
+                    cateId: 0,
+                    itemId: 3,
+                    imgName: "33.png",
+                    url: "javascript:void(0);",
+                    title: "此处是媒体的名称3",
+                    desc: "此处是媒体的描述信息3",
+                    price: 888.88
+                },
+                {
+                    cateId: 0,
+                    itemId: 4,
+                    imgName: "44.png",
+                    url: "javascript:void(0);",
+                    title: "此处是媒体的名称4",
+                    desc: "此处是媒体的描述信息4",
+                    price: 888.88
+                }
+            ],
+            // 分组类型
+            isMediaGroup: false,
+            cates: [],
+            defaultCates: [
+                {
+                    cateId: 0,
+                    cateName: "最新商品"
+                },
+                {
+                    cateId: 1,
+                    cateName: "推荐商品"
+                }
+            ]
+        }
+    };
+
+    var constructor = function() {
+        JZD.Widget.apply(this, arguments);
+        var data = {};
+        this.data = JZD.extend(data, JZD.Tool.depthClone(configs.data)) ;
+    };
+
+    var methods = {
+        getHtml: function() {
+            this.filterType();
+
+            var template = configs.template;
+            var data = this.data;
+            // 如果不是从接口获取数据模式那么数据使用默认数据。
+            if(data.items == null || data.items.length == 0) {
+                data.items = data.defaultItems;
+            }
+            var items = data.items;
+            var itemsHtml = "";
+
+            // 拼接和解析生成媒体项的模版
+            var itemTemplate = template.item;
+
+            var infoWrapTemplate = "";
+            var mediaInfoTemplate = "";
+            var isPromotion = (data.widgetClassName.search("jz-media-promotion") != -1);
+            if(data.isTitle || data.isDesc || data.isPrice || isPromotion) {
+                if(data.isTitle) { mediaInfoTemplate += template.title; }
+                if(data.isDesc) {  mediaInfoTemplate += template.desc; }
+                if(data.isPrice) { mediaInfoTemplate += template.price; }
+                // 促销类型
+                if(isPromotion) { mediaInfoTemplate += template.promotioBadge; }
+                infoWrapTemplate = JZD.Html.template(template.mediaInfoWrap,{
+                    mediaInfoTemplate: mediaInfoTemplate
+                }, true);
+            }
+
+            var btnWrapTemplate = "";
+            var mediaBtnsTemplate = "";
+            if(data.isBuyBtn || data.isHeartBtn) {
+                if(data.isBuyBtn) { mediaBtnsTemplate += template.buyBtn; }
+                if(data.isHeartBtn) {  mediaBtnsTemplate += template.heartbtn; }
+                btnWrapTemplate = JZD.Html.template(template.btnsWrap,{
+                    mediaBtnsTemplate: mediaBtnsTemplate
+                }, true);
+            }
+
+            itemTemplate =  JZD.Html.template(itemTemplate,{
+                infoWrapTemplate: infoWrapTemplate,
+                btnWrapTemplate: btnWrapTemplate
+            }, true);
+
+            for(i in items) {
+                var itemData = items[i];
+                // 如果是图片大小一大两小交替出现类型
+                if(data.widgetClassName.search("jz-media-size-alternately") != -1 && i%3 == 0) {
+                    itemData.itemBigClassName = data.itemBigClassName;
+                } else { // 其他类型时清除大图项的特定className
+                    itemData.itemBigClassName = "";
+                }
+                // 促销类型
+                if(data.widgetClassName.search("jz-media-promotion") != -1) {
+                    itemData.promotioBadge = data.promotioBadge;
+                }
+                if(data.isBuyBtn) { itemData.buyBtn = data.buyBtn; }
+                itemsHtml += JZD.Html.template(itemTemplate, itemData, true);
+            }
+
+            return JZD.Html.template(template.wrap, {
+                widgetClassName: data.widgetClassName,
+                itemsHtml: itemsHtml
+            }, true);
+        },
+        domAction: function() {
+            var that = this;
+            var data = this.data;
+
+            var className = "#view-wrap .jz-media-list .jz-media-item";
+            var items =  $(className);
+
+            // 样式标记当前编辑的item
+            $("#view-wrap .jz-media-list [data-item-id='" + data.activeId +"']")
+                .addClass("item-editoring");
+
+            items.click(function() {
+                JZD.Comm.itemState.call(this, that, items);
+            });
+        },
+        bindEditor: function(editor) {
+            var that = this;
+            var data = this.data;
+            JZD.Widget.prototype.bindEditor.apply(this,arguments);
+            // 编辑器缩略图选中时，通知显示视图的对应item显示样式。
+            editor.on('modify.view.active', function(){
+                var activeId = that.activeId;
+                that.cl.find(".jz-media-item").removeClass("item-editoring");
+                that.cl.find("[data-item-id='" + activeId + "']").addClass("item-editoring");
+            });
+        },
+
+        //  下面是判断具体的媒体相似类型
+        filterType: function() {
+            switch(this.options.type) {
+                case "goodsGroup1":
+
+                    break;
+                case "goodsGroup2":
+
+                    break;
+            }
+        }
+    }
+
+    return JZD.createClass(constructor, methods, JZD.Widget, statics);
+})();
+
+JZD.Editor.MediaList = (function() {
+    var configs = {
+        template:
+            '<div class="am-form media-list am-form-horizontal">' +
+            '    <div class="am-form-group am-form-group-sm">' +
+            '        <label class="am-u-sm-2 am-form-label">添加媒体项</label>' +
+            '        <div class="am-u-sm-10 add-media-item">' +
+            '            <a href="javascript:void(0);" ' +
+            '               class="am-fl add-item-btn js-addItemBtn">' +
+            '                <i class="am-icon-plus"></i></a>' +
+            '            <input class="js-itemOrder" type="hidden" value=""/>' +
+            '            <div class="item-thumbnail js-itemThumbnail">' +
+            '            </div>' +
+            '        </div>' +
+            '    </div>' +
+            '    <div class="js-changeClassName">' +
+            '        <div class="am-form-group am-form-group-sm">' +
+            '            <label class="am-u-sm-2 am-form-label">列表类型</label>' +
+            '            <div class="am-u-sm-10 js-radioGroup js-media-type">' +
+            '                {radio-html}' +
+            '                {radio-html}' +
+            '                {radio-html}' +
+            '                {radio-html}' +
+            '                {radio-html}' +
+            '            </div>' +
+            '        </div>' +
+            '        <div class="am-form-group am-form-group-sm" style="margin-bottom: 0;">' +
+            '            <label class="am-u-sm-2 am-form-label">显示模式</label>' +
+            '            <div class="am-u-sm-10 js-radioGroup js-show-pattern">' +
+            '                {radio-html}' +
+            '                {radio-html}' +
+            '                {radio-html}' +
+            '                {radio-html}' +
+            '            </div>' +
+            '        </div>' +
+            '        <div class="am-form-group am-form-group-sm">' +
+            '            <label class="am-u-sm-2 am-form-label"></label>' +
+            '            <div class="am-u-sm-10 js-radioGroup js-show-cols">' +
+                            // 瀑布流和图册类型  控制列的数量
+            '                {radio-html}' +
+            '                {radio-html}' +
+            '                {radio-html}' +
+            '                {radio-html}' +
+            '            </div>' +
+            '        </div>' +
+            '    </div>' +
+            '    <div class="am-form-group am-form-group-sm js-waterfall">' +
+            '        <label class="am-u-sm-2 am-form-label">瀑布流参数配置</label>' +
+            '        <div class="am-u-sm-10">' +
+            '            <div class="js-plugin-radios">' +
+            '               <div class="am-form-group js-radioGroup js-load-way">' +
+            '                    <label style="line-height: 1em; margin-bottom: 0;' +
+            '                        vertical-align: bottom;">加载方式：</label>' +
+            '                   {radio-html}' +
+            '                   {radio-html}' +
+            '               </div>' +
+            '               <div class="am-form-group js-radioGroup">' +
+            '                    <label style="line-height: 1em; margin-bottom: 0;' +
+            '                        vertical-align: bottom;">加载动画：</label>' +
+            '                   {radio-html}' +
+            '                   {radio-html}' +
+            '               </div>' +
+            '            </div>' +
+            '            <div class="js-plugin-inputs">' +
+            '               <div class="am-form-group">' +
+            '                懒加载初始化数目：<input type="number" min="3"' +
+            '                    style="display: inline-block; width: auto;"' +
+            '                   data-prop-name="initNum">' +
+            '               </div>' +
+            '               <div class="am-form-group">' +
+            '                懒加载的批次数量：<input type="number" min="3"' +
+            '                   style="display: inline-block; width: auto;"' +
+            '                   data-prop-name="batchNum">' +
+            '               </div>' +
+            '            </div>' +
+            '        </div>' +
+            '    </div>' +
+            '    <div class="am-form-group am-form-group-sm">' +
+            '        <label class="am-u-sm-2 am-form-label">选择显示信息</label>' +
+            '        <div class="am-u-sm-10 js-show-cont">' +
+            '            {checkbox-html}' +
+            '            {checkbox-html}' +
+            '            {checkbox-html}' +
+            '            {checkbox-html}' +
+            '            {checkbox-html}' +
+                        // 四种类型的购买样式选择
+            '            <div class="js-radioGroup js-buyBtns">' +
+            '               {radio-html}{radio-html}{radio-html}{radio-html}' +
+            '            </div>' +
+            '        </div>' +
+            '    </div>' +
+            '</div>',
+        radios: {
+            labels: [
+                "大图", "小图", "一大两小交替", "详细列表", "瀑布流",
+                "卡片", "极简", "促销", "图册或者广告",
+                "2列", "3列", "4列", "5列",
+                // 瀑布流参数配置
+                "default", "懒加载", "default", "淡入",
+                // 购买按钮样式
+                "样式1", "样式2", "样式3", "样式4"
+            ],
+            values: [
+                "jz-media-big", "jz-media-small", "jz-media-size-alternately", "jz-media-rowlist", "jz-media-waterfall",
+                "", "jz-media-simple", "jz-media-promotion", "jz-media-imgs",
+                "", "jz-media-col3", "jz-media-col4", "jz-media-col5",
+                "default", "lazy", "default", "fade",
+                "icons-buy-btn1", "icons-buy-btn2", "icons-buy-btn3", "icons-buy-btn4"
+            ],
+            propNames: [
+                "widgetClassName", 1, 1, 1, 1,
+                1, 1, 1, 1,
+                "widgetClassName", 1, 1, 1,
+                "loadWay", "loadWay", "animation", "animation",
+                "buyBtn", 1, 1, 1
+            ]
+        },
+        checkboxs: {
+            labels: [
+                "标题", "描述信息", "价格", "购买按钮", "收藏心形图标"
+            ],
+            values: [
+
+            ],
+            propNames: [
+                "isTitle", "isDesc", "isPrice", "isBuyBtn", "isHeartBtn"
+            ]
+        }
+
+    };
+
+    var methods = {
+        getHtml: function() {
+            return this._getHtml(configs);
+        },
+        initEvent: function() {
+            var that = this;
+            var data = this.data;
+            JZD.Editor.prototype.initEvent.apply(this,arguments);
+
+            // 添加媒体项
+            $(".js-addItemBtn").click(function() {
+                that.addItem();
+                if($(".js-media-type [value='jz-media-waterfall']")[0].checked) {
+                    that.trigger("invoke.plugin", "media-waterfall",
+                        data.pluginData);
+                }
+            });
+        },
+
+        initDom: function() {
+            JZD.Editor.prototype.initDom.apply(this, arguments);
+            // item缩略图
+            this.showItemThumb();
+            // 缩略图拖动排序
+            this.listenItemOrder();
+            this.thumbDragsort();
+        },
+        // 显示item缩略图
+        showItemThumb: function() {
+            var that = this;
+            var items = this.data.items;
+            var data = this.data;
+
+            $(".js-itemThumbnail .thumb-item").remove();
+            $.each(items, function(i, item) {
+                var thumbData = {
+                    itemId: item.itemId,
+                    url: item.url,
+                    imgName: item.imgName
+                }
+                var thumbTemplate =
+                    '<a data-item-id="{itemId}" href="{url}" class="thumb-item">' +
+                    '    <img src="../img/temp/{imgName}" alt=""/>' +
+                    '    <i>×</i>' +
+                    '</a>';
+
+                $(".js-itemThumbnail").append(
+                    JZD.Html.template(thumbTemplate, thumbData, true)
+                );
+            });
+            $(".js-itemThumbnail .thumb-item").removeClass("item-editoring");
+            $(".js-itemThumbnail [data-item-id='" + data.activeId + "']").
+                addClass("item-editoring");
+
+            $(".js-itemThumbnail .thumb-item").click(function() {
+                JZD.Comm.itemState.call(this, that, $(".js-itemThumbnail .thumb-item"));
+                that.trigger("data.change.onlyRender");
+                if($(".js-media-type [value='jz-media-waterfall']")[0].checked) {
+                    that.trigger("invoke.plugin", "media-waterfall",
+                        data.pluginData);
+                }
+            });
+
+            // 删除按钮绑定事件
+            var delBtns = $(".js-itemThumbnail .thumb-item i");
+            $(delBtns).click(function() {
+                var itemId = $(this).parent().attr("data-item-id");
+
+                if(itemId == data.activeId) {
+                    data.activeId = -1; // 如果删除的是当前的标记的item，那么废除当前活动id。
+                }
+                that.trigger("del.data.item", "items", itemId);
+                $(this).parent().remove();
+
+                if($(".js-media-type [value='jz-media-waterfall']")[0].checked) {
+                    that.trigger("invoke.plugin", "media-waterfall",
+                        data.pluginData);
+                }
+            });
+        },
+        // 缩略图拖动排序
+        thumbDragsort: function() {
+            var that = this;
+            $(".js-itemThumbnail").dragsort({
+                dragSelector: "a",
+                dragEnd: that.saveThumbOrder,
+                placeHolderTemplate: "<a class='thumb-item'><img><i></i></a>"
+            });
+        },
+        // 使用一个钩子监听条目顺序的变化，并触发重新渲染视图。
+        listenItemOrder: function() {
+            var that = this;
+            var data = this.data;
+            //  值的改变触发视图重新排序
+            $(".js-itemOrder").change(function() {
+                var itemOrder = this.value;
+                itemOrder = itemOrder.split("|");
+                // 重新排序data中的items
+                var items = data.items;
+                var tempItems = [];
+                for(i in itemOrder) {
+                    for(j in items) {
+                        if(items[j].itemId == itemOrder[i]) {
+                            tempItems.push(items[j]);
+                            break;
+                        }
+                    }
+                }
+                data.items = tempItems;
+                that.trigger("data.change", "items", tempItems);
+                if($(".js-media-type [value='jz-media-waterfall']")[0].checked) {
+                    that.trigger("invoke.plugin", "media-waterfall",
+                        data.pluginData);
+                }
+            });
+        },
+        domAction: function() {
+            var that = this;
+
+            // 组件单选按钮关联显示逻辑
+            this.radioLogic();
+
+            // 购买按钮现实逻辑
+            this.buyBtnShowLogic();
+            $("input[data-prop-name='isBuyBtn']").change(function() {
+                that.buyBtnShowLogic();
+            });
+
+            // 瀑布流form事件
+            this.pluginFormData();
+            this.pluginFormEvent();
+            $(".js-media-type [value='jz-media-waterfall']").change(function() {
+                if(this.checked) {
+                    // 如果是瀑布流类型
+                    that.data.pluginData.domSelector = "." + this.value;
+                    // 渲染初始数据
+                    that.trigger("invoke.plugin", "media-waterfall",
+                            that.data.pluginData);
+                    that.pluginFormEvent();
+                }
+            });
+        },
+        radioLogic: function() {
+            var that = this;
+
+            var doms = $(".js-changeClassName input");
+
+            // 根据对应的className让相关的单选按钮显示正确的状态
+            // （在生成编辑试图的时候初始化单选按钮的状态）
+            var className = this.data.widgetClassName;
+            className = $.trim(className);
+            var classNAry = className.split(/\s+/);
+
+            if(classNAry[1] == undefined) { classNAry[1] = ""; }
+            if(classNAry[2] == undefined) { classNAry[2] = ""; }
+
+            $(".js-media-type [value='" + classNAry[0] +"']").attr("checked", true);
+            $(".js-show-pattern [value='" + classNAry[1] +"']").attr("checked", true);
+            $(".js-show-cols [value='" + classNAry[2] +"']").attr("checked", true);
+
+            this.radioShowLogic();
+            doms.change(function() {
+                that.radioShowLogic();
+
+                // 合并className
+                var property = $(this).attr("data-prop-name");
+                var className = "";
+                for(var i = 0; i < doms.length; i++) {
+                    if(doms[i].checked) {
+                        var colsDom = $(".js-show-cols input");
+                        if(jQuery.inArray(doms[i], colsDom) == -1) {
+                            className += " " +  doms[i].value;
+                        }
+                        // 在准备合并的是控制列的className时，只有小图类型才合并控制列的className
+                        if(jQuery.inArray(doms[i], colsDom) != -1 &&
+                            $(".js-media-type input")[1].checked) {
+                            className += " " +  doms[i].value;
+                        } else {
+                            continue;
+                        }
+                    }
+                }
+                className = $.trim(className);
+                that.trigger('data.change', property, className);
+            });
+
+            // 瀑布流form显示逻辑
+            $(".js-plugin-inputs").hide();
+            $(".js-load-way input").change(function() {
+                if($(".js-load-way input")[1].checked) {
+                    $(".js-plugin-inputs").show();
+                } else {
+                    $(".js-plugin-inputs").hide();
+                }
+            });
+
+        },
+        radioShowLogic: function() {
+            var types = $(".js-media-type input");
+            var patterns = $(".js-show-pattern input");
+            var cols = $(".js-show-cols input");
+            // 单选显示和选中逻辑
+            cols.parent().hide();
+            patterns.parent().show();
+            $(".js-waterfall").hide();
+            if(types[1].checked || types[4].checked) {
+                cols.parent().show();
+            }
+            if(types[0].checked || types[2].checked) {
+                if(patterns[2].checked) {
+                    patterns[0].checked  = true;
+                }
+                $(patterns[2]).parent().hide();
+            }
+            if(types[3].checked) {
+                if(patterns[2].checked || patterns[3].checked) {
+                    patterns[0].checked  = true;
+                }
+                $(patterns[2]).parent().hide();
+                $(patterns[3]).parent().hide();
+            }
+            if(types[4].checked) {
+                $(".js-waterfall").show();
+            }
+        },
+        buyBtnShowLogic: function() {
+            var btn = $("input[data-prop-name='isBuyBtn']");
+            if(btn[0].checked) {
+                $(".js-buyBtns").show();
+            } else {
+                $(".js-buyBtns").hide()
+            }
+        },
+        // 瀑布流相关表单数据改变触发事件
+        pluginFormEvent: function() {
+            var that = this;
+            var pluginData = this.data.pluginData;
+            // 瀑布流form的值改变时，同时改变它的数据，即是pluginData
+            $(".js-show-cols input").change(function() {
+                var property = "cols";
+                var value = this.value;
+                var p = /\D*(\d+)/g;
+                var m  = p.exec(this.value);
+                // 在列为2列时的特殊处理
+                value = (m == null) ? 2 : m[1];
+                pluginData[property] = value;
+            });
+            $(".js-waterfall input").change(function() {
+                var property = $(this).attr("data-prop-name");
+                pluginData[property] = this.value;
+                that.trigger("data.change.onlyRender");
+            });
+            // 在瀑布流被选中的情况下,监听相关form数据改变后触发瀑布流执行。
+            var className =
+                ".js-show-pattern input, " +
+                ".js-show-cols input, " +
+                ".js-waterfall input, " +
+                ".js-show-cont input";
+            $(className).change(function() {
+                if($(".js-media-type input")[4].checked) {
+                    that.trigger("invoke.plugin", "media-waterfall", pluginData);
+                }
+            });
+        },
+        pluginFormData: function() {
+            var data = this.data.pluginData;
+            for(key in data) {
+                if (typeof data[key] == "string" || typeof data[key] == "number") {
+                    var className1 = ".js-plugin-radios [data-prop-name='" + key + "'], " +
+                        "   js-show-cols [data-prop-name='" + key + "']";
+                    var className2 = ".js-plugin-inputs [data-prop-name='" + key + "']";
+                    var doms = $(className1);
+                    for(var i = 0; i < doms.length; i++) {
+                        if($(doms[i]).attr("value") == data[key]) {
+                            doms[i].checked= true;
+                        }
+                    }
+                    // 输入框赋值
+                    $(className2).attr("value", data[key]);
+
+                }
+                if(key == "cols") {
+                    var value = data[key] == 2 ? "" : "jz-media-col" + data[key];
+                    var className = ".js-show-cols input[value='" + value + "']"
+                    $(className).attr("checked", true);
+                }
+            }
+        },
+        addItemTest: function() {
+            var items = this.data.items;
+            var itemDataTemplate = this.data.itemDataTemplate;
+            itemDataTemplate = JZD.Tool.depthClone(itemDataTemplate)
+            var num = parseInt(Math.random() * 20);
+            for(key in itemDataTemplate) {
+                var item = itemDataTemplate[key];
+                if(key == "url") {
+                    continue;
+                } else if (typeof item == "string") {
+                    itemDataTemplate[key] = num + item;
+                }
+                if(typeof item == "numbter") {
+                    itemDataTemplate[key] = num * 100;
+                }
+            }
+            itemDataTemplate.itemId = items.length;
+            items.push(itemDataTemplate);
+        },
+        getSynItems: function() {
+            // todo
+            // 获取接口的数据的逻辑
+        }
+    }
+
+    return JZD.createClass(null, methods, JZD.Editor);
+})();

@@ -1,0 +1,22 @@
+/* line 8, ../../sass/widgets/store-bar.scss */
+.jz-store-bar {
+  line-height: 50px;
+  padding: 0 1rem;
+}
+/* line 11, ../../sass/widgets/store-bar.scss */
+.jz-store-bar .right-txt {
+  width: 6em;
+  text-align: right;
+}
+/* line 15, ../../sass/widgets/store-bar.scss */
+.jz-store-bar .left-txt {
+  margin-right: 6.5em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+/* line 21, ../../sass/widgets/store-bar.scss */
+.jz-store-bar [class*=icon] {
+  font-size: 20px;
+  vertical-align: top;
+}

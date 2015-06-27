@@ -1,0 +1,140 @@
+@charset "UTF-8";
+/*
+  导航组件
+  diy-page项目的实际使用的地方：
+    文本导航、图片导航、关联链接
+*/
+/* line 15, ../../sass/widgets/nav.scss */
+.jz-nav {
+  display: block;
+  background-color: #fff;
+}
+/* line 18, ../../sass/widgets/nav.scss */
+.jz-nav li {
+  position: relative;
+  padding: 12px;
+}
+/* line 21, ../../sass/widgets/nav.scss */
+.jz-nav li > a {
+  display: block;
+  *zoom: 1;
+}
+/* line 38, ../../../../../../usr/local/ruby-2.1.4/lib/ruby/gems/2.1.0/gems/compass-core-1.0.1/stylesheets/compass/utilities/general/_clearfix.scss */
+.jz-nav li > a:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+/* line 26, ../../sass/widgets/nav.scss */
+.jz-nav .jz-item-icon {
+  float: left;
+}
+/* line 28, ../../sass/widgets/nav.scss */
+.jz-nav .jz-item-icon img {
+  vertical-align: top;
+  height: 100%;
+}
+/* line 33, ../../sass/widgets/nav.scss */
+.jz-nav .jz-item-txt {
+  overflow: hidden;
+  font-size: 1.6rem;
+}
+/* line 37, ../../sass/widgets/nav.scss */
+.jz-nav .jz-right-icon {
+  float: right;
+}
+/* line 40, ../../sass/widgets/nav.scss */
+.jz-nav .jz-item-explain {
+  display: none;
+  margin: 0;
+  font-size: 1.4rem;
+  color: #555555;
+}
+
+/* line 47, ../../sass/widgets/nav.scss */
+.jz-nav-icon1 {
+  padding: 12px 0;
+  *zoom: 1;
+}
+/* line 38, ../../../../../../usr/local/ruby-2.1.4/lib/ruby/gems/2.1.0/gems/compass-core-1.0.1/stylesheets/compass/utilities/general/_clearfix.scss */
+.jz-nav-icon1:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+/* line 50, ../../sass/widgets/nav.scss */
+.jz-nav-icon1 li {
+  float: left;
+  width: 25%;
+  padding: 8px;
+  text-align: center;
+}
+/* line 56, ../../sass/widgets/nav.scss */
+.jz-nav-icon1 .jz-item-icon {
+  float: none;
+  height: 48px;
+  margin-bottom: 6px;
+}
+/* line 60, ../../sass/widgets/nav.scss */
+.jz-nav-icon1 .jz-item-icon img {
+  max-width: 48px;
+}
+/* line 62, ../../sass/widgets/nav.scss */
+.jz-nav-icon1 .jz-right-icon {
+  display: none;
+}
+/* line 63, ../../sass/widgets/nav.scss */
+.jz-nav-icon1 .jz-item-txt {
+  line-height: 1;
+}
+
+/* line 69, ../../sass/widgets/nav.scss */
+.jz-nav-icon2 li, .jz-nav-icon3 li {
+  border-bottom: 1px solid #ddd;
+}
+/* line 71, ../../sass/widgets/nav.scss */
+.jz-nav-icon2 .jz-item-icon img, .jz-nav-icon2 .jz-item-icon i, .jz-nav-icon3 .jz-item-icon img, .jz-nav-icon3 .jz-item-icon i {
+  margin-right: 15px;
+}
+/* line 74, ../../sass/widgets/nav.scss */
+.jz-nav-icon2 .jz-item-icon i, .jz-nav-icon2 .jz-right-icon i, .jz-nav-icon3 .jz-item-icon i, .jz-nav-icon3 .jz-right-icon i {
+  font-size: 24px;
+  vertical-align: baseline;
+}
+
+/* line 81, ../../sass/widgets/nav.scss */
+.jz-nav-icon2 li {
+  padding: 8px 12px;
+}
+/* line 82, ../../sass/widgets/nav.scss */
+.jz-nav-icon2 .jz-item-icon, .jz-nav-icon2 .jz-item-txt {
+  line-height: 24px;
+  height: 34px;
+  padding: 5px 0;
+}
+/* line 87, ../../sass/widgets/nav.scss */
+.jz-nav-icon2 .jz-item-icon img {
+  max-width: 24px;
+}
+
+/* line 90, ../../sass/widgets/nav.scss */
+.jz-nav-icon3 .jz-item-icon {
+  height: 50px;
+}
+/* line 92, ../../sass/widgets/nav.scss */
+.jz-nav-icon3 .jz-item-icon img {
+  max-width: 50px;
+}
+/* line 94, ../../sass/widgets/nav.scss */
+.jz-nav-icon3 .jz-right-icon {
+  margin-top: 10px;
+}
+/* line 96, ../../sass/widgets/nav.scss */
+.jz-nav-icon3 .jz-item-explain {
+  display: block;
+}
+
+/* line 103, ../../sass/widgets/nav.scss */
+.am-menu-default > .am-collapse, .am-menu-stack > .am-collapse {
+  display: block;
+}

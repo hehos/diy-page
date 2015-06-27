@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<script>
+    var template =
+            '<div class="am-form am-form-horizontal">' +
+            '    <div class="am-form-group am-form-group-sm">' +
+            '        {input-html}' +
+            '    </div>' +
+            '    <div class="am-form-group am-form-group-sm">' +
+            '        <label class="am-u-sm-2 am-form-label">标题模板</label>' +
+            '        <div class="am-u-sm-10">' +
+            '            {radio-html}' +
+            '            {radio-html}' +
+            '        </div>' +
+            '    </div>' +
+            '    <div class="am-form-group am-form-group-sm">' +
+            '        {input-html}' +
+            '    </div>' +
+            '    <div class="am-form-group am-form-group-sm">' +
+            '        <label class="am-u-sm-2 am-form-label">显示</label>' +
+            '        <div class="am-u-sm-10">' +
+            '            {radio-html}' +
+            '            {radio-html}' +
+            '            {radio-html}' +
+            '        </div>' +
+            '    </div>' +
+            '</div>'
+    var inputPattern = /\{\s*radio[-_]html\s*\}/;
+
+
+
+
+    function parseTemplateStr(typeStr, template) {
+        var pattern = new RegExp("\\{\\s*" + typeStr + "[-_]html\\s*\\}", "i");
+        console.log(pattern.source);
+        for(var i = 0; true; i++) {
+            if(pattern.test(template)) {
+                var matches = pattern.exec(template);
+                var mStr = matches[0];
+                // 将匹配字符串的'}'字符前加上当前迭代的次数来标注字符串 予以区分。
+                mStr = mStr.replace(/\}/, i + "}");
+                // 去掉空格。
+                mStr = mStr.replace(/\s+/, "");
+                // 将添加了标注的字符串替换原字符串的正则匹配处。
+                // 注：正则对象没有标志g，所以只替换第一个匹配。
+                template = template.replace(pattern, mStr);
+            } else {
+                break;
+            }
+        }
+        return template;
+    }
+
+    var t1 = parseTemplateStr("input", template);
+    console.log(t1);
+</script>
+</body>
+</html>

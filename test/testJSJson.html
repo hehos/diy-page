@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<script>
+    var json = {name: "张三", age: 22};
+    var j1 = {};
+    var j2 = {};
+//    console.log(typeof Object.keys(json));
+
+    var j1 = {
+        name: "zhangshan",
+        age: 22
+    }
+    debugger;
+    var j2 = j1;
+    j1 = {
+        name: "lishi",
+        age: 23
+    }
+//    console.log(j2.name);
+
+    console.log(JSON.stringify(json));
+
+</script>
+</body>
+</html>

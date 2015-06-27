@@ -1,0 +1,19 @@
+插件安装命令集合
+
+npm install grunt --save-dev;
+npm install grunt-contrib-sass --save-dev;
+npm install grunt-contrib-uglify --save-dev;
+npm install grunt-contrib-qunit --save-dev;
+npm install grunt-contrib-watch --save-dev;
+npm install grunt-contrib-concat --save-dev;
+npm install grunt-contrib-concat --save-dev;
+npm install grunt-contrib-jshint --save-dev;grunt-contrib-clean
+npm install grunt-contrib-clean --save-dev;
+
+
+批量安装命令：
+for i in grunt sass uglify qunit watch concat;do npm install grunt-contrib-$i --save-dev;done
+
+
+for i in grunt sass uglify qunit watch concat;do echo "npm install grunt-contrib-$i --save-dev";done
+
