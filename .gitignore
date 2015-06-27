@@ -23,8 +23,8 @@ _site
 .project
 .settings
 .tmproj
-.idea           #phpstorm  编辑器自动生成的目录
-.sass-cache     #sass  自动生成的目录
+.idea           
+.sass-cache
 *.css.map
 *.esproj
 *.sublime-project
